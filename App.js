@@ -143,7 +143,9 @@ export default function App() {
   }];
 
   const findLowerScore = () => {
-    diceVals.forEach
+    diceVals.forEach(die => {
+      console.log(die);
+    })
   };
 
   const resetGame = () => {
