@@ -239,9 +239,43 @@ export default function App() {
     }
   };
 
+  const findStraightScore = () => {
+    diceVals.sort();
+    let counter = 0;
+    for (let i=0; i < diceVals.length - 1; i++) {
+      if (diceVals[i] - diceVals[i + 1] === -1) {
+        counter++;
+      }
+    }
+
+    if (counter >= 3) {
+      setSmallStraight(prevState => ({
+        ...prevState,
+        score: 30
+      }));
+    }
+    if (counter === 4) {
+      setLargeStraight(prevState => ({
+        ...prevState,
+        score: 40
+      }));
+    }
+    if (counter !== 4 && counter !== 3) {
+      setSmallStraight(prevState => ({
+        ...prevState,
+        score: 0
+      }));
+      setLargeStraight(prevState => ({
+        ...prevState,
+        score: 0
+      }));
+    }
+  };
+
   useEffect(() => {
     findUpperScore();
     findOfKindScore();
+    findStraightScore();
   }, [die0, die1, die2, die3, die4]);
 
   const resetRoll = () => {
