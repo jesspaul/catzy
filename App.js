@@ -134,6 +134,7 @@ export default function App() {
   const fullHouseOriginal = {category: 'Full House', score: 0, isLocked: false};
   const smallStraightOriginal = {category: 'Small Straight', score: 0, isLocked: false};
   const largeStraightOriginal = {category: 'Large Straight', score: 0, isLocked: false};
+  const chanceScoreOriginal = {category: 'Chance', score: 0, isLocked: false};
   const yahtzeeScoreOriginal = {category: 'Yahtzee', score: 0, isLocked: false};
 
   const [threeKind, setThreeKind] = useState(threeKindOriginal);
@@ -141,6 +142,7 @@ export default function App() {
   const [fullHouse, setFullHouse] = useState(fullHouseOriginal);
   const [smallStraight, setSmallStraight] = useState(smallStraightOriginal);
   const [largeStraight, setLargeStraight] = useState(largeStraightOriginal);
+  const [chanceScore, setChanceScore] = useState(chanceScoreOriginal);
   const [yahtzeeScore, setYahtzeeScore] = useState(yahtzeeScoreOriginal);
 
   let lowerScores = [{
@@ -158,6 +160,9 @@ export default function App() {
   }, {
     score: largeStraight,
     setter: setLargeStraight
+  }, {
+    score: chanceScore,
+    setter: setChanceScore
   }, {
     score: yahtzeeScore,
     setter: setYahtzeeScore
@@ -273,10 +278,26 @@ export default function App() {
     }
   };
 
+  const findChanceScore = () => {
+    let sum = diceVals.reduce((total, current) => (total + current), 0);
+    if (typeof(sum) === 'number' && !chanceScore.isLocked) {
+      setChanceScore(prevState=> ({
+        ...prevState,
+        score: sum
+      }));
+    } else if (!chanceScore.isLocked) {
+      setChanceScore(prevState=> ({
+        ...prevState,
+        score: 0
+      }));
+    }
+  };
+
   useEffect(() => {
     findUpperScore();
     findOfKindScore();
     findStraightScore();
+    findChanceScore();
   }, [die0, die1, die2, die3, die4]);
 
   const resetRoll = () => {
@@ -321,6 +342,7 @@ export default function App() {
     setFullHouse(fullHouseOriginal);
     setSmallStraight(smallStraightOriginal);
     setLargeStraight(largeStraightOriginal);
+    setChanceScore(chanceScoreOriginal);
     setYahtzeeScore(yahtzeeScoreOriginal);
     setRound(0);
   };
