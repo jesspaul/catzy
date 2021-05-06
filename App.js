@@ -29,6 +29,7 @@ export default function App() {
   let dice = [{dieVar: die0, setDieVar: setDie0}, {dieVar: die1, setDieVar: setDie1}, {dieVar: die2, setDieVar: setDie2}, {dieVar: die3, setDieVar: setDie3}, {dieVar: die4, setDieVar: setDie4}];
 
   const [roll, setRoll] = useState(0);
+  const [round, setRound] = useState(0);
   
   const rollDice = () => {
     dice.forEach(dieObj => {
@@ -298,6 +299,7 @@ export default function App() {
     !smallStraight.isLocked && setSmallStraight(smallStraightOriginal);
     !largeStraight.isLocked && setLargeStraight(largeStraightOriginal);
     !yahtzeeScore.isLocked && setYahtzeeScore(yahtzeeScoreOriginal);
+    setRound(round + 1);
   };
 
   const resetGame = () => {
@@ -320,6 +322,7 @@ export default function App() {
     setSmallStraight(smallStraightOriginal);
     setLargeStraight(largeStraightOriginal);
     setYahtzeeScore(yahtzeeScoreOriginal);
+    setRound(0);
   };
 
   return (
@@ -329,6 +332,7 @@ export default function App() {
         <Scorecard upperScores={upperScores} lowerScores={lowerScores}/>
 
         <View style={styles.diceSection}>
+          <Text style={{fontSize: 20}}>Round: {round}</Text>
           <Text style={{fontSize: 20}}>Roll: {roll}</Text>
           <View style={styles.diceContainer}>
             { dice.map((dieObj, idx) => (
