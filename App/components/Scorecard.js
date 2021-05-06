@@ -1,7 +1,13 @@
 import React, { useState } from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet, ProgressViewIOS } from 'react-native';
 
 const Scorecard = ({ upperScores, findUpperScore, lowerScores }) => {
+    const lockScore = (scoreObj) => {
+        scoreObj.setter(prevState => ({
+            ...prevState,
+            isLocked: scoreObj.isLocked ? false : true
+        }));
+    };
 
     let upperTotal = upperScores.reduce((total, current) => {
         return total + current.score;
@@ -16,13 +22,13 @@ const Scorecard = ({ upperScores, findUpperScore, lowerScores }) => {
             <Text style={styles.title} onPress={findUpperScore}>Scorecard!</Text>
             <View style={styles.section}>
                 {upperScores.map((scoreObj, idx) => (
-                    <Text key={idx}>{scoreObj.category}: {scoreObj.score}</Text>
+                    <Text style={scoreObj.isLocked ? styles.locked : styles.unLocked} onPress={() => lockScore(scoreObj)} key={idx}>{scoreObj.category}: {scoreObj.score}</Text>
                 ))}
                 <Text>Upper Section Total: {upperTotal}</Text>
             </View>
             <View style={styles.section}>
                 {lowerScores.map((scoreObj, idx) => (
-                    <Text key={idx}>{scoreObj.category}: {scoreObj.score}</Text>
+                    <Text style={scoreObj.isLocked ? styles.locked : styles.unLocked} onPress={() => lockScore(scoreObj)} key={idx}>{scoreObj.category}: {scoreObj.score}</Text>
                 ))}
                 <Text>Lower Section Total: {lowerTotal}</Text>
             </View>
@@ -38,6 +44,14 @@ const styles = StyleSheet.create({
     container: {
         justifyContent: 'center',
         backgroundColor: 'pink'
+    },
+
+    locked: {
+        color: 'red',
+    },
+
+    unLocked: {
+        color: 'white'
     },
 
     title: {

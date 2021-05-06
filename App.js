@@ -55,26 +55,32 @@ export default function App() {
   let upperScores = [{
     category: 'Ones',
     score: oneScore,
+    setter: setOneScore,
     isLocked: false
   }, {
     category: 'Twos',
     score: twoScore,
+    setter: setTwoScore,
     isLocked: false
   }, {
     category: 'Threes',
     score: threeScore,
+    setter: setThreeScore,
     isLocked: false
   }, {
     category: 'Fours',
     score: fourScore,
+    setter: setFourScore,
     isLocked: false
   }, {
     category: 'Fives',
     score: fiveScore,
+    setter: setFiveScore,
     isLocked: false
   }, {
     category: 'Sixes',
     score: sixScore,
+    setter: setSixScore,
     isLocked: false
   }];
 
