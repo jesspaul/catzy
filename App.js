@@ -339,14 +339,19 @@ export default function App() {
               <Dice key={idx} value={dieObj.dieVar.value} isLocked={dieObj.dieVar.isLocked} setDie={dieObj.setDieVar} />
             ))}
           </View>
-          { roll < 3 ? (
+          { (round === 13 && roll === 3) ? (
+            <>
+            <Text>Game Over</Text>
+            <Button title='Play Again' onPress={resetGame} />
+            </>
+          ) : (roll < 3 ? (
             <Button title='Roll!' onPress={rollDice} />
             ) : (
               <>
               <Text>Roll Over</Text>
-              <Button title='Play Again' onPress={resetRoll} />
+              <Button title='Next Round' onPress={resetRoll} />
               </>
-          )}
+          ))}
         </View>
       </View>
     </View>
