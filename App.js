@@ -329,7 +329,7 @@ export default function App() {
         <Scorecard upperScores={upperScores} lowerScores={lowerScores}/>
 
         <View style={styles.diceSection}>
-          <Text>Roll: {roll}</Text>
+          <Text style={{fontSize: 20}}>Roll: {roll}</Text>
           <View style={styles.diceContainer}>
             { dice.map((dieObj, idx) => (
               <Dice key={idx} value={dieObj.dieVar.value} isLocked={dieObj.dieVar.isLocked} setDie={dieObj.setDieVar} />
