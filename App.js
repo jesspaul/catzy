@@ -44,44 +44,39 @@ export default function App() {
   };
 
   let diceVals = dice.map(die => die.dieVar.value);
-    
-  const [oneScore, setOneScore] = useState(0);
-  const [twoScore, setTwoScore] = useState(0);
-  const [threeScore, setThreeScore] = useState(0);
-  const [fourScore, setFourScore] = useState(0);
-  const [fiveScore, setFiveScore] = useState(0);
-  const [sixScore, setSixScore] = useState(0);
+  
+  const oneOriginal = {category: 'Ones', score: 0, isLocked: false};
+  const twoOriginal = {category: 'Twos', score: 0, isLocked: false};
+  const threeOriginal = {category: 'Threes', score: 0, isLocked: false};
+  const fourOriginal = {category: 'Fours', score: 0, isLocked: false};
+  const fiveOriginal = {category: 'Fives', score: 0, isLocked: false};
+  const sixOriginal = {category: 'Sixes', score: 0, isLocked: false};
+
+  const [oneScore, setOneScore] = useState(oneOriginal);
+  const [twoScore, setTwoScore] = useState(twoOriginal);
+  const [threeScore, setThreeScore] = useState(threeOriginal);
+  const [fourScore, setFourScore] = useState(fourOriginal);
+  const [fiveScore, setFiveScore] = useState(fiveOriginal);
+  const [sixScore, setSixScore] = useState(sixOriginal);
 
   let upperScores = [{
-    category: 'Ones',
     score: oneScore,
-    setter: setOneScore,
-    isLocked: false
+    setter: setOneScore
   }, {
-    category: 'Twos',
     score: twoScore,
     setter: setTwoScore,
-    isLocked: false
   }, {
-    category: 'Threes',
     score: threeScore,
     setter: setThreeScore,
-    isLocked: false
   }, {
-    category: 'Fours',
     score: fourScore,
     setter: setFourScore,
-    isLocked: false
   }, {
-    category: 'Fives',
     score: fiveScore,
     setter: setFiveScore,
-    isLocked: false
   }, {
-    category: 'Sixes',
     score: sixScore,
     setter: setSixScore,
-    isLocked: false
   }];
 
   let ones = 0;
@@ -95,57 +90,69 @@ export default function App() {
     diceVals.forEach(die => {
       if (die === 1) {
           ones += 1;
-          setOneScore(ones);
+          setOneScore(prevState => ({
+            ...prevState,
+            score: ones
+          }));
       } else if (die === 2) {
           twos += 2;
-          setTwoScore(twos);
+          setTwoScore(prevState => ({
+            ...prevState,
+            score: twos
+          }));
       } else if (die === 3) {
           threes += 3;
-          setThreeScore(threes);
+          setThreeScore(prevState => ({
+            ...prevState,
+            score: threes
+          }));
       } else if (die === 4) {
           fours += 4;
-          setFourScore(fours);
+          setFourScore(prevState => ({
+            ...prevState,
+            score: fours
+          }));
       } else if (die === 5) {
           fives += 5;
-          setFiveScore(fives);
+          setFiveScore(prevState => ({
+            ...prevState,
+            score: fives
+          }));
       } else if (die === 6) {
           sixes += 6;
-          setSixScore(sixes);
+          setSixScore(prevState => ({
+            ...prevState,
+            score: sixes
+          }));
       }
     });
   };
 
-  const [threeKind, setThreeKind] = useState(0);
-  const [fourKind, setFourKind] = useState(0);
-  const [fullHouse, setFullHouse] = useState(0);
-  const [smallStraight, setSmallStraight] = useState(0);
-  const [largeStraight, setLargeStraight] = useState(0);
-  const [yahtzeeScore, setYahtzeeScore] = useState(0);
+  const [threeKind, setThreeKind] = useState({category: 'Three of a Kind', score: 0, isLocked: false});
+  const [fourKind, setFourKind] = useState({category: 'Four of a Kind', score: 0, isLocked: false});
+  const [fullHouse, setFullHouse] = useState({category: 'Full House', score: 0, isLocked: false});
+  const [smallStraight, setSmallStraight] = useState({category: 'Small Straight', score: 0, isLocked: false});
+  const [largeStraight, setLargeStraight] = useState({category: 'Large Straight', score: 0, isLocked: false});
+  const [yahtzeeScore, setYahtzeeScore] = useState({category: 'Yahtzee', score: 0, isLocked: false});
 
   let lowerScores = [{
-    category: 'Three of a Kind',
     score: threeKind,
-    isLocked: false
+    setter: setThreeKind
   }, {
-    category: 'Four of a Kind',
     score: fourKind,
-    isLocked: false
+    setter: setFourKind
   }, {
-    category: 'Full House',
     score: fullHouse,
-    isLocked: false
+    setter: setFullHouse
   }, {
-    category: 'Small Straight',
     score: smallStraight,
-    isLocked: false
+    setter: setSmallStraight
   }, {
-    category: 'Large Straight',
     score: largeStraight,
-    isLocked: false
+    setter: setLargeStraight
   }, {
-    category: 'Yahtzee',
     score: yahtzeeScore,
-    isLocked: false
+    setter: setYahtzeeScore
   }];
 
   const findLowerScore = () => {
@@ -162,12 +169,12 @@ export default function App() {
       });
     });
     setRoll(0);
-    setOneScore(0);
-    setTwoScore(0);
-    setThreeScore(0);
-    setFourScore(0);
-    setFiveScore(0);
-    setSixScore(0);
+    setOneScore(oneOriginal);
+    setTwoScore(twoOriginal);
+    setThreeScore(threeOriginal);
+    setFourScore(fourOriginal);
+    setFiveScore(fiveOriginal);
+    setSixScore(sixOriginal);
   };
 
   return (
