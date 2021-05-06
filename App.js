@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { StyleSheet, Text, View, Button } from 'react-native';
 import Dice from './App/components/Dice';
+import Scorecard from './App/components/Scorecard';
 
 export default function App() {
   const dieOriginalState = 'Dice';
@@ -55,20 +56,26 @@ export default function App() {
   return (
     <View style={styles.container}>
       <Text style={styles.header}>Yahtzee!</Text>
-      <Text>Roll: {roll}</Text>
-      <View style={styles.diceContainer}>
-        { dice.map((dieObj, idx) => (
-          <Dice key={idx} value={dieObj.dieVar.value} isLocked={dieObj.dieVar.isLocked} setDie={dieObj.setDieVar} />
-        ))}
+      <View style={styles.gameboard}>
+        <Scorecard />
+
+        <View style={styles.diceSection}>
+          <Text>Roll: {roll}</Text>
+          <View style={styles.diceContainer}>
+            { dice.map((dieObj, idx) => (
+              <Dice key={idx} value={dieObj.dieVar.value} isLocked={dieObj.dieVar.isLocked} setDie={dieObj.setDieVar} />
+            ))}
+          </View>
+          { roll < 3 ? (
+            <Button title='Roll!' onPress={rollDice} />
+            ) : (
+              <>
+              <Text>Game Over</Text>
+              <Button title='Play Again' onPress={resetGame} />
+              </>
+          )}
+        </View>
       </View>
-      { roll < 3 ? (
-        <Button title='Roll!' onPress={rollDice} />
-        ) : (
-          <>
-          <Text>Game Over</Text>
-          <Button title='Play Again' onPress={resetGame} />
-          </>
-      )}
     </View>
   );
 }
@@ -86,7 +93,16 @@ const styles = StyleSheet.create({
     marginVertical: 20
   },
 
+  diceSection: {
+    alignItems: 'center',
+    backgroundColor: 'wheat'
+  },
+
   header: {
     fontSize: 40
+  },
+
+  gameboard: {
+    flexDirection: 'row'
   }
 });
