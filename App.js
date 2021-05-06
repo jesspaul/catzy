@@ -134,6 +134,7 @@ export default function App() {
   const fullHouseOriginal = {category: 'Full House', score: 0, isLocked: false};
   const smallStraightOriginal = {category: 'Small Straight', score: 0, isLocked: false};
   const largeStraightOriginal = {category: 'Large Straight', score: 0, isLocked: false};
+  const chanceScoreOriginal = {category: 'Chance', score: 0, isLocked: false};
   const yahtzeeScoreOriginal = {category: 'Yahtzee', score: 0, isLocked: false};
 
   const [threeKind, setThreeKind] = useState(threeKindOriginal);
@@ -141,6 +142,7 @@ export default function App() {
   const [fullHouse, setFullHouse] = useState(fullHouseOriginal);
   const [smallStraight, setSmallStraight] = useState(smallStraightOriginal);
   const [largeStraight, setLargeStraight] = useState(largeStraightOriginal);
+  const [chanceScore, setChanceScore] = useState(chanceScoreOriginal);
   const [yahtzeeScore, setYahtzeeScore] = useState(yahtzeeScoreOriginal);
 
   let lowerScores = [{
@@ -159,6 +161,9 @@ export default function App() {
     score: largeStraight,
     setter: setLargeStraight
   }, {
+    score: chanceScore,
+    setter: setChanceScore
+  }, {
     score: yahtzeeScore,
     setter: setYahtzeeScore
   }];
@@ -170,7 +175,7 @@ export default function App() {
 
     let valueCount = [{value: 1, count: countValues(1, diceVals)}, {value: 2, count: countValues(2, diceVals)}, {value: 3, count: countValues(3, diceVals)}, {value: 4, count: countValues(4, diceVals)}, {value: 5, count: countValues(5, diceVals)}, {value: 6, count: countValues(6, diceVals)}];
     
-    if (valueCount.some(obj => obj.count === 3) && valueCount.some(obj => obj.count === 2)) {
+    if (valueCount.some(obj => obj.count === 3) && valueCount.some(obj => obj.count === 2) && !fullHouse.isLocked) {
       let fullScore = 0;
       valueCount.forEach(obj => {
         if (obj.count === 3) {
@@ -184,7 +189,7 @@ export default function App() {
         ...prevState,
         score: fullScore
       }));
-    } else {
+    } else if (!fullHouse.isLocked) {
       setFullHouse(prevState => ({
         ...prevState,
         score: 0
@@ -193,14 +198,14 @@ export default function App() {
 
     if (valueCount.some(obj => obj.count >= 3)) {
       valueCount.forEach(obj => {
-        if (obj.count >= 3) {
+        if (obj.count >= 3 && !threeKind.isLocked) {
           setThreeKind(prevState => ({
             ...prevState,
             score: obj.value * 3
           }));
         }
       });
-    } else {
+    } else if (!threeKind.isLocked) {
       setThreeKind(prevState => ({
         ...prevState,
         score: 0
@@ -209,14 +214,14 @@ export default function App() {
 
     if (valueCount.some(obj => obj.count >= 4)) {
       valueCount.forEach(obj => {
-        if (obj.count >= 4) {
+        if (obj.count >= 4 && !fourKind.isLocked) {
           setFourKind(prevState => ({
             ...prevState,
             score: obj.value * 4
           }));
         }
       });
-    } else {
+    } else if (!fourKind.isLocked) {
       setFourKind(prevState => ({
         ...prevState,
         score: 0
@@ -225,14 +230,14 @@ export default function App() {
 
     if (valueCount.some(obj => obj.count === 5)) {
       valueCount.forEach(obj => {
-        if (obj.count === 5) {
+        if (obj.count === 5 && !yahtzeeScore.isLocked) {
           setYahtzeeScore(prevState => ({
             ...prevState,
             score: 50
           }));
         }
       });
-    } else {
+    } else if (!yahtzeeScore.isLocked) {
       setYahtzeeScore(prevState => ({
         ...prevState,
         score: 0
@@ -249,24 +254,43 @@ export default function App() {
       }
     }
 
-    if (counter >= 3) {
+    if (counter >= 3 && !smallStraight.isLocked) {
       setSmallStraight(prevState => ({
         ...prevState,
         score: 30
       }));
     }
-    if (counter === 4) {
+    if (counter === 4 && !largeStraight.isLocked) {
       setLargeStraight(prevState => ({
         ...prevState,
         score: 40
       }));
     }
     if (counter !== 4 && counter !== 3) {
-      setSmallStraight(prevState => ({
+      if (!smallStraight.isLocked) {
+        setSmallStraight(prevState => ({
+          ...prevState,
+          score: 0
+        }));
+      }
+      if (!largeStraight.isLocked) {
+        setLargeStraight(prevState => ({
+          ...prevState,
+          score: 0
+        }));
+      }
+    }
+  };
+
+  const findChanceScore = () => {
+    let sum = diceVals.reduce((total, current) => (total + current), 0);
+    if (typeof(sum) === 'number' && !chanceScore.isLocked) {
+      setChanceScore(prevState=> ({
         ...prevState,
-        score: 0
+        score: sum
       }));
-      setLargeStraight(prevState => ({
+    } else if (!chanceScore.isLocked) {
+      setChanceScore(prevState=> ({
         ...prevState,
         score: 0
       }));
@@ -277,6 +301,7 @@ export default function App() {
     findUpperScore();
     findOfKindScore();
     findStraightScore();
+    findChanceScore();
   }, [die0, die1, die2, die3, die4]);
 
   const resetRoll = () => {
@@ -321,6 +346,7 @@ export default function App() {
     setFullHouse(fullHouseOriginal);
     setSmallStraight(smallStraightOriginal);
     setLargeStraight(largeStraightOriginal);
+    setChanceScore(chanceScoreOriginal);
     setYahtzeeScore(yahtzeeScoreOriginal);
     setRound(0);
   };
