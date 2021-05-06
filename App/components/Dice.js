@@ -1,12 +1,38 @@
 import React from 'react';
-import { View, Text } from 'react-native';
+import { TouchableOpacity, Text, StyleSheet } from 'react-native';
 
-const Dice = () => {
+const Dice = ({ value, isLocked, setDie }) => {
+    const lockDie = () => {
+        setDie(prevState => ({
+            ...prevState,
+            isLocked: isLocked ? false : true
+        }))
+    }
+
     return (
-        <View>
-            <Text>Dice</Text>
-        </View>
+        <TouchableOpacity style={styles.dice} onPress={lockDie}>
+            <Text style={isLocked ? styles.locked : styles.unLocked}>{value}</Text>
+        </TouchableOpacity>
     );
 }
+
+const styles = StyleSheet.create({
+    dice: {
+        width: 40,
+        height: 40,
+        backgroundColor: 'lightblue',
+        marginHorizontal: 10,
+        justifyContent: 'center',
+        alignItems: 'center'
+    },
+    
+    locked: {
+        color: 'red',
+    },
+
+    unLocked: {
+        color: 'white'
+    }
+})
  
 export default Dice;
