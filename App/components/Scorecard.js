@@ -11,17 +11,20 @@ const Scorecard = ({ upperScores, lowerScores }) => {
         }
     };
 
-    let upperTotal = upperScores.reduce((total, current) => {
+    let lockedUpper = upperScores.filter(scoreObj => scoreObj.score.isLocked);
+    let lockedLower = lowerScores.filter(scoreObj => scoreObj.score.isLocked);
+
+    let upperTotal = lockedUpper.reduce((total, current) => {
         return total + current.score.score;
     }, 0);
 
-    let lowerTotal = lowerScores.reduce((total, current) => {
+    let lowerTotal = lockedLower.reduce((total, current) => {
         return total + current.score.score;
     }, 0);
 
     return (
         <View style={styles.container}>
-            <Text style={styles.title}>Scorecard!</Text>
+            <Text style={styles.title} onPress={() => console.log(lockedUpper)}>Scorecard!</Text>
             <View style={styles.section}>
                 {upperScores.map((scoreObj, idx) => (
                     <Text
