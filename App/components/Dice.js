@@ -1,10 +1,17 @@
 import React from 'react';
 import { TouchableOpacity, Text, StyleSheet } from 'react-native';
 
-const Dice = ({ value }) => {
+const Dice = ({ value, isLocked, setDie }) => {
+    const lockDie = () => {
+        setDie(prevState => ({
+            ...prevState,
+            isLocked: isLocked ? false : true
+        }))
+    }
+
     return (
-        <TouchableOpacity style={styles.dice}>
-            <Text>{value}</Text>
+        <TouchableOpacity style={styles.dice} onPress={lockDie}>
+            <Text style={isLocked ? styles.locked : styles.unLocked}>{value}</Text>
         </TouchableOpacity>
     );
 }
@@ -17,6 +24,14 @@ const styles = StyleSheet.create({
         marginHorizontal: 10,
         justifyContent: 'center',
         alignItems: 'center'
+    },
+    
+    locked: {
+        color: 'red',
+    },
+
+    unLocked: {
+        color: 'white'
     }
 })
  

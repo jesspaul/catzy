@@ -58,7 +58,7 @@ export default function App() {
       <Text>Roll: {roll}</Text>
       <View style={styles.diceContainer}>
         { dice.map((dieObj, idx) => (
-          <Dice key={idx} value={dieObj.dieVar.value} />
+          <Dice key={idx} value={dieObj.dieVar.value} isLocked={dieObj.dieVar.isLocked} setDie={dieObj.setDieVar} />
         ))}
       </View>
       { roll < 3 ? (
