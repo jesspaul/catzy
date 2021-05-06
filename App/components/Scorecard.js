@@ -23,8 +23,9 @@ const Scorecard = ({ upperScores, lowerScores }) => {
     }, 0);
 
     return (
+        <View>
+        <Text style={styles.title} onPress={() => console.log(lockedUpper)}>Scorecard!</Text>
         <View style={styles.container}>
-            <Text style={styles.title} onPress={() => console.log(lockedUpper)}>Scorecard!</Text>
             <View style={styles.section}>
                 {upperScores.map((scoreObj, idx) => (
                     <Text
@@ -35,8 +36,6 @@ const Scorecard = ({ upperScores, lowerScores }) => {
                         {scoreObj.score.category}: {scoreObj.score.score}
                     </Text>
                 ))}
-            </View>
-            <View style={styles.totalSection}>
                 <Text style={styles.total}>Upper Bonus: {}</Text>
                 <Text style={styles.total}>Upper Total: {upperTotal}</Text>
             </View>
@@ -50,11 +49,10 @@ const Scorecard = ({ upperScores, lowerScores }) => {
                         {scoreObj.score.category}: {scoreObj.score.score}
                     </Text>
                 ))}
-            </View>
-            <View style={styles.totalSection}>
                 <Text style={styles.total}>Lower Total: {lowerTotal}</Text>
-                <Text style={styles.total}>Game Total: {}</Text>
             </View>
+        </View>
+                <Text style={styles.total}>Game Total: {}</Text>
         </View>
     );
 }
@@ -62,7 +60,8 @@ const Scorecard = ({ upperScores, lowerScores }) => {
 const styles = StyleSheet.create({
     container: {
         justifyContent: 'center',
-        backgroundColor: 'pink'
+        backgroundColor: 'pink',
+        flexDirection: 'row'
     },
 
     locked: {
@@ -83,19 +82,13 @@ const styles = StyleSheet.create({
     },
 
     section: {
-        height: 75,
-        flexWrap: 'wrap',
+        marginHorizontal: 5,
     },
 
     total: {
         fontSize: 20,
         marginHorizontal: 5,
-        marginBottom: 20
     },
-
-    totalSection: {
-        flexDirection: 'row'
-    }
 });
  
 export default Scorecard;
