@@ -35,7 +35,10 @@ const Scorecard = ({ upperScores, lowerScores }) => {
                         {scoreObj.score.category}: {scoreObj.score.score}
                     </Text>
                 ))}
-                <Text>Upper Section Total: {upperTotal}</Text>
+            </View>
+            <View style={styles.totalSection}>
+                <Text style={styles.total}>Upper Bonus: {}</Text>
+                <Text style={styles.total}>Upper Total: {upperTotal}</Text>
             </View>
             <View style={styles.section}>
                 {lowerScores.map((scoreObj, idx) => (
@@ -47,17 +50,16 @@ const Scorecard = ({ upperScores, lowerScores }) => {
                         {scoreObj.score.category}: {scoreObj.score.score}
                     </Text>
                 ))}
-                <Text>Lower Section Total: {lowerTotal}</Text>
+            </View>
+            <View style={styles.totalSection}>
+                <Text style={styles.total}>Lower Total: {lowerTotal}</Text>
+                <Text style={styles.total}>Game Total: {}</Text>
             </View>
         </View>
     );
 }
 
 const styles = StyleSheet.create({
-    column: {
-        marginHorizontal: 20
-    },
-    
     container: {
         justifyContent: 'center',
         backgroundColor: 'pink'
@@ -65,12 +67,13 @@ const styles = StyleSheet.create({
 
     locked: {
         color: 'red',
-        fontSize: 20
+        fontSize: 20,
+        marginHorizontal: 10
     },
 
     unLocked: {
-        color: 'white',
-        fontSize: 20
+        fontSize: 20,
+        marginHorizontal: 10
     },
 
     title: {
@@ -79,7 +82,18 @@ const styles = StyleSheet.create({
     },
 
     section: {
-        marginVertical: 5,
+        height: 75,
+        flexWrap: 'wrap',
+    },
+
+    total: {
+        fontSize: 20,
+        marginHorizontal: 5,
+        marginBottom: 20
+    },
+
+    totalSection: {
+        flexDirection: 'row'
     }
 });
  
