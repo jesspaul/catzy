@@ -169,19 +169,21 @@ export default function App() {
 
     let valueCount = [{value: 1, count: countValues(1, diceVals)}, {value: 2, count: countValues(2, diceVals)}, {value: 3, count: countValues(3, diceVals)}, {value: 4, count: countValues(4, diceVals)}, {value: 5, count: countValues(5, diceVals)}, {value: 6, count: countValues(6, diceVals)}];
     
-    valueCount.forEach(obj => {
-      if (obj.count >= 3) {
-        setThreeKind(prevState => ({
-          ...prevState,
-          score: obj.value * obj.count
-        }));
-      } else {
-        setThreeKind(prevState => ({
-          ...prevState,
-          score: 0
-        }));
-      }
-    });
+    if (valueCount.some(obj => obj.count >= 3)) {
+      valueCount.forEach(obj => {
+        if (obj.count >= 3) {
+          setThreeKind(prevState => ({
+            ...prevState,
+            score: obj.value * obj.count
+          }));
+        }
+      });
+    } else {
+      setThreeKind(prevState => ({
+        ...prevState,
+        score: 0
+      }));
+    }
   };
 
   const findYahtzeeScore = () => {
@@ -237,7 +239,7 @@ export default function App() {
     <View style={styles.container}>
       <Text style={styles.header} onPress={resetGame}>Yahtzee!</Text>
       <View style={styles.gameboard}>
-        <Scorecard upperScores={upperScores} findUpperScore={findUpperScore} lowerScores={lowerScores}/>
+        <Scorecard upperScores={upperScores} lowerScores={lowerScores} findUpperScore={findUpperScore} findThreeKindScore={findThreeKindScore} />
 
         <View style={styles.diceSection}>
           <Text>Roll: {roll}</Text>
