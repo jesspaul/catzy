@@ -1,11 +1,11 @@
 import React from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { TouchableOpacity, Text, StyleSheet } from 'react-native';
 
-const Dice = ({ number }) => {
+const Dice = ({ value }) => {
     return (
-        <View style={styles.dice}>
-            <Text>{number}</Text>
-        </View>
+        <TouchableOpacity style={styles.dice}>
+            <Text>{value}</Text>
+        </TouchableOpacity>
     );
 }
 
