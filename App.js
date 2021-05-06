@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { StyleSheet, Text, View, Button } from 'react-native';
 import Dice from './App/components/Dice';
 import Scorecard from './App/components/Scorecard';
@@ -178,33 +178,50 @@ export default function App() {
           }));
         }
       });
-      if (valueCount.some(obj => obj.count >= 4)) {
-        valueCount.forEach(obj => {
-          if (obj.count >= 4) {
-            setFourKind(prevState => ({
-              ...prevState,
-              score: obj.value * 4
-            }));
-          }
-        });
-      }
-      if (valueCount.some(obj => obj.count === 5)) {
-        valueCount.forEach(obj => {
-          if (obj.count === 5) {
-            setYahtzeeScore(prevState => ({
-              ...prevState,
-              score: 50
-            }));
-          }
-        });
-      }
+    } else {
+      setThreeKind(prevState => ({
+        ...prevState,
+        score: 0
+      }));
+    }
+
+    if (valueCount.some(obj => obj.count >= 4)) {
+      valueCount.forEach(obj => {
+        if (obj.count >= 4) {
+          setFourKind(prevState => ({
+            ...prevState,
+            score: obj.value * 4
+          }));
+        }
+      });
+    } else {
+      setFourKind(prevState => ({
+        ...prevState,
+        score: 0
+      }));
+    }
+
+    if (valueCount.some(obj => obj.count === 5)) {
+      valueCount.forEach(obj => {
+        if (obj.count === 5) {
+          setYahtzeeScore(prevState => ({
+            ...prevState,
+            score: 50
+          }));
+        }
+      });
+    } else {
+      setYahtzeeScore(prevState => ({
+        ...prevState,
+        score: 0
+      }));
     }
   };
 
-  const findYahtzeeScore = () => {
-    diceVals.every(die);
-    // returns true if all elements meet condition
-  }
+  useEffect(() => {
+    findUpperScore();
+    findOfKindScore();
+  }, [die0, die1, die2, die3, die4]);
 
   const resetRoll = () => {
     dice.forEach(dieObj => {
