@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 
-const Scorecard = ({ upperScores, lowerScores, findUpperScore, findThreeKindScore }) => {
+const Scorecard = ({ upperScores, lowerScores, findUpperScore, findOfKindScore }) => {
     const lockScore = (scoreObj) => {
         if (!scoreObj.isLocked) {
             scoreObj.setter(prevState => ({
@@ -21,7 +21,7 @@ const Scorecard = ({ upperScores, lowerScores, findUpperScore, findThreeKindScor
 
     const findAllScores = () => {
         findUpperScore();
-        findThreeKindScore();
+        findOfKindScore();
     }
 
     return (

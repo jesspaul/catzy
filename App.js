@@ -162,7 +162,7 @@ export default function App() {
     setter: setYahtzeeScore
   }];
 
-  const findThreeKindScore = () => {
+  const findOfKindScore = () => {
     const countValues = (value, array) => array.reduce((counter, currentVal) => {
       return value === currentVal ? counter + 1 : counter
     }, 0);
@@ -174,15 +174,30 @@ export default function App() {
         if (obj.count >= 3) {
           setThreeKind(prevState => ({
             ...prevState,
-            score: obj.value * obj.count
+            score: obj.value * 3
           }));
         }
       });
-    } else {
-      setThreeKind(prevState => ({
-        ...prevState,
-        score: 0
-      }));
+      if (valueCount.some(obj => obj.count >= 4)) {
+        valueCount.forEach(obj => {
+          if (obj.count >= 4) {
+            setFourKind(prevState => ({
+              ...prevState,
+              score: obj.value * 4
+            }));
+          }
+        });
+      }
+      if (valueCount.some(obj => obj.count === 5)) {
+        valueCount.forEach(obj => {
+          if (obj.count === 5) {
+            setYahtzeeScore(prevState => ({
+              ...prevState,
+              score: 50
+            }));
+          }
+        });
+      }
     }
   };
 
@@ -239,7 +254,7 @@ export default function App() {
     <View style={styles.container}>
       <Text style={styles.header} onPress={resetGame}>Yahtzee!</Text>
       <View style={styles.gameboard}>
-        <Scorecard upperScores={upperScores} lowerScores={lowerScores} findUpperScore={findUpperScore} findThreeKindScore={findThreeKindScore} />
+        <Scorecard upperScores={upperScores} lowerScores={lowerScores} findUpperScore={findUpperScore} findOfKindScore={findOfKindScore} />
 
         <View style={styles.diceSection}>
           <Text>Roll: {roll}</Text>
@@ -256,7 +271,6 @@ export default function App() {
               <Button title='Play Again' onPress={resetRoll} />
               </>
           )}
-          <Text onPress={findThreeKindScore}>Three Kind Score</Text>
         </View>
       </View>
     </View>
