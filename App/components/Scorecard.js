@@ -1,38 +1,19 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 
-const Scorecard = () => {
+const Scorecard = ({ upperScores, findUpperScore, lowerScores }) => {
     return (
         <View style={styles.container}>
-            <Text style={styles.title}>Scorecard!</Text>
+            <Text style={styles.title} onPress={findUpperScore}>Scorecard!</Text>
             <View style={styles.section}>
-                <View style={styles.column}>
-                    <Text>Ones</Text>
-                    <Text>Twos</Text>
-                    <Text>Threes</Text>
-                    <Text>Bonus</Text>
-                </View>
-                <View style={styles.column}>
-                    <Text>Fours</Text>
-                    <Text>Fives</Text>
-                    <Text>Sixes</Text>
-                    <Text>Upper Total</Text>
-                </View>
+                {upperScores.map((scoreObj, idx) => (
+                    <Text key={idx}>{scoreObj.category}: {scoreObj.score}</Text>
+                ))}
             </View>
-
             <View style={styles.section}>
-                <View style={styles.column}>
-                    <Text>3 of a Kind</Text>
-                    <Text>4 of a Kind</Text>
-                    <Text>Full House</Text>
-                    <Text>Lower Total</Text>
-                </View>
-                <View style={styles.column}>
-                    <Text>Small Straight</Text>
-                    <Text>Large Straight</Text>
-                    <Text>Yahtzee</Text>
-                    <Text>Game Total</Text>
-                </View>
+                {lowerScores.map((scoreObj, idx) => (
+                    <Text key={idx}>{scoreObj.category}: {scoreObj.score}</Text>
+                ))}
             </View>
         </View>
     );
@@ -55,7 +36,6 @@ const styles = StyleSheet.create({
 
     section: {
         marginVertical: 5,
-        flexDirection: 'row'
     }
 });
  

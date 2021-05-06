@@ -33,7 +33,7 @@ export default function App() {
   const rollDice = () => {
     dice.forEach(dieObj => {
       if (!dieObj.dieVar.isLocked) {
-        let randomNum = Math.floor(Math.random()*6);
+        let randomNum = Math.floor(Math.random()*6) + 1;
         dieObj.setDieVar(prevState => ({
           ...prevState,
           value: randomNum
@@ -41,7 +41,110 @@ export default function App() {
       }
     });
     setRoll(roll + 1);
-  }
+  };
+
+  let diceVals = dice.map(die => die.dieVar.value);
+    
+  const [oneScore, setOneScore] = useState(0);
+  const [twoScore, setTwoScore] = useState(0);
+  const [threeScore, setThreeScore] = useState(0);
+  const [fourScore, setFourScore] = useState(0);
+  const [fiveScore, setFiveScore] = useState(0);
+  const [sixScore, setSixScore] = useState(0);
+
+  let upperScores = [{
+    category: 'Ones',
+    score: oneScore,
+    isLocked: false
+  }, {
+    category: 'Twos',
+    score: twoScore,
+    isLocked: false
+  }, {
+    category: 'Threes',
+    score: threeScore,
+    isLocked: false
+  }, {
+    category: 'Fours',
+    score: fourScore,
+    isLocked: false
+  }, {
+    category: 'Fives',
+    score: fiveScore,
+    isLocked: false
+  }, {
+    category: 'Sixes',
+    score: sixScore,
+    isLocked: false
+  }];
+
+  let ones = 0;
+  let twos = 0;
+  let threes = 0;
+  let fours = 0;
+  let fives = 0;
+  let sixes = 0;
+
+  const findUpperScore = () => {
+    diceVals.forEach(die => {
+      if (die === 1) {
+          ones += 1;
+          setOneScore(ones);
+      } else if (die === 2) {
+          twos += 2;
+          setTwoScore(twos);
+      } else if (die === 3) {
+          threes += 3;
+          setThreeScore(threes);
+      } else if (die === 4) {
+          fours += 4;
+          setFourScore(fours);
+      } else if (die === 5) {
+          fives += 5;
+          setFiveScore(fives);
+      } else if (die === 6) {
+          sixes += 6;
+          setSixScore(sixes);
+      }
+    });
+  };
+
+  const [threeKind, setThreeKind] = useState(0);
+  const [fourKind, setFourKind] = useState(0);
+  const [fullHouse, setFullHouse] = useState(0);
+  const [smallStraight, setSmallStraight] = useState(0);
+  const [largeStraight, setLargeStraight] = useState(0);
+  const [yahtzeeScore, setYahtzeeScore] = useState(0);
+
+  let lowerScores = [{
+    category: 'Three of a Kind',
+    score: threeKind,
+    isLocked: false
+  }, {
+    category: 'Four of a Kind',
+    score: fourKind,
+    isLocked: false
+  }, {
+    category: 'Full House',
+    score: fullHouse,
+    isLocked: false
+  }, {
+    category: 'Small Straight',
+    score: smallStraight,
+    isLocked: false
+  }, {
+    category: 'Large Straight',
+    score: largeStraight,
+    isLocked: false
+  }, {
+    category: 'Yahtzee',
+    score: yahtzeeScore,
+    isLocked: false
+  }];
+
+  const findLowerScore = () => {
+    diceVals.forEach
+  };
 
   const resetGame = () => {
     dice.forEach(dieObj => {
@@ -51,13 +154,19 @@ export default function App() {
       });
     });
     setRoll(0);
-  }
+    setOneScore(0);
+    setTwoScore(0);
+    setThreeScore(0);
+    setFourScore(0);
+    setFiveScore(0);
+    setSixScore(0);
+  };
 
   return (
     <View style={styles.container}>
       <Text style={styles.header}>Yahtzee!</Text>
       <View style={styles.gameboard}>
-        <Scorecard />
+        <Scorecard upperScores={upperScores} findUpperScore={findUpperScore} lowerScores={lowerScores}/>
 
         <View style={styles.diceSection}>
           <Text>Roll: {roll}</Text>
@@ -95,7 +204,8 @@ const styles = StyleSheet.create({
 
   diceSection: {
     alignItems: 'center',
-    backgroundColor: 'wheat'
+    backgroundColor: 'wheat',
+    justifyContent: 'center'
   },
 
   header: {
