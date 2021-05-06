@@ -169,6 +169,27 @@ export default function App() {
 
     let valueCount = [{value: 1, count: countValues(1, diceVals)}, {value: 2, count: countValues(2, diceVals)}, {value: 3, count: countValues(3, diceVals)}, {value: 4, count: countValues(4, diceVals)}, {value: 5, count: countValues(5, diceVals)}, {value: 6, count: countValues(6, diceVals)}];
     
+    if (valueCount.some(obj => obj.count === 3) && valueCount.some(obj => obj.count === 2)) {
+      let fullScore = 0;
+      valueCount.forEach(obj => {
+        if (obj.count === 3) {
+          fullScore += 3 * obj.value;
+        }
+        if (obj.count === 2) {
+          fullScore += 2 * obj.value;
+        }
+      })
+      setFullHouse(prevState => ({
+        ...prevState,
+        score: fullScore
+      }));
+    } else {
+      setFullHouse(prevState => ({
+        ...prevState,
+        score: 0
+      }));
+    }
+
     if (valueCount.some(obj => obj.count >= 3)) {
       valueCount.forEach(obj => {
         if (obj.count >= 3) {
@@ -271,7 +292,7 @@ export default function App() {
     <View style={styles.container}>
       <Text style={styles.header} onPress={resetGame}>Yahtzee!</Text>
       <View style={styles.gameboard}>
-        <Scorecard upperScores={upperScores} lowerScores={lowerScores} findUpperScore={findUpperScore} findOfKindScore={findOfKindScore} />
+        <Scorecard upperScores={upperScores} lowerScores={lowerScores}/>
 
         <View style={styles.diceSection}>
           <Text>Roll: {roll}</Text>

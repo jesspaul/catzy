@@ -62,14 +62,16 @@ const styles = StyleSheet.create({
 
     locked: {
         color: 'red',
+        fontSize: 20
     },
 
     unLocked: {
-        color: 'white'
+        color: 'white',
+        fontSize: 20
     },
 
     title: {
-        fontSize: 20,
+        fontSize: 25,
         textAlign: 'center'
     },
 
