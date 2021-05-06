@@ -1,12 +1,23 @@
 import React from 'react';
-import { View, Text } from 'react-native';
+import { View, Text, StyleSheet } from 'react-native';
 
-const Dice = () => {
+const Dice = ({ number }) => {
     return (
-        <View>
-            <Text>Dice</Text>
+        <View style={styles.dice}>
+            <Text>{number}</Text>
         </View>
     );
 }
+
+const styles = StyleSheet.create({
+    dice: {
+        width: 40,
+        height: 40,
+        backgroundColor: 'lightblue',
+        marginHorizontal: 10,
+        justifyContent: 'center',
+        alignItems: 'center'
+    }
+})
  
 export default Dice;
