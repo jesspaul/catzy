@@ -162,11 +162,32 @@ export default function App() {
     setter: setYahtzeeScore
   }];
 
-  const findLowerScore = () => {
-    diceVals.forEach(die => {
-      console.log(die);
-    })
+  const findThreeKindScore = () => {
+    const countValues = (value, array) => array.reduce((counter, currentVal) => {
+      return value === currentVal ? counter + 1 : counter
+    }, 0);
+
+    let valueCount = [{value: 1, count: countValues(1, diceVals)}, {value: 2, count: countValues(2, diceVals)}, {value: 3, count: countValues(3, diceVals)}, {value: 4, count: countValues(4, diceVals)}, {value: 5, count: countValues(5, diceVals)}, {value: 6, count: countValues(6, diceVals)}];
+    
+    valueCount.forEach(obj => {
+      if (obj.count >= 3) {
+        setThreeKind(prevState => ({
+          ...prevState,
+          score: obj.value * obj.count
+        }));
+      } else {
+        setThreeKind(prevState => ({
+          ...prevState,
+          score: 0
+        }));
+      }
+    });
   };
+
+  const findYahtzeeScore = () => {
+    diceVals.every(die);
+    // returns true if all elements meet condition
+  }
 
   const resetRoll = () => {
     dice.forEach(dieObj => {
@@ -233,6 +254,7 @@ export default function App() {
               <Button title='Play Again' onPress={resetRoll} />
               </>
           )}
+          <Text onPress={findThreeKindScore}>Three Kind Score</Text>
         </View>
       </View>
     </View>
