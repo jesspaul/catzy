@@ -3,7 +3,6 @@ import { View, Text, StyleSheet } from 'react-native';
 
 const Scorecard = ({ upperScores, findUpperScore, lowerScores }) => {
     const lockScore = (scoreObj) => {
-        console.log(scoreObj);
         if (!scoreObj.isLocked) {
             scoreObj.setter(prevState => ({
                 ...prevState,
@@ -13,15 +12,12 @@ const Scorecard = ({ upperScores, findUpperScore, lowerScores }) => {
     };
 
     let upperTotal = upperScores.reduce((total, current) => {
-        return total + current.score;
+        return total + current.score.score;
     }, 0);
 
     let lowerTotal = lowerScores.reduce((total, current) => {
-        return total + current.score;
+        return total + current.score.score;
     }, 0);
-
-    console.log('upper', upperScores)
-    console.log('lower', lowerScores)
 
     return (
         <View style={styles.container}>
@@ -36,20 +32,20 @@ const Scorecard = ({ upperScores, findUpperScore, lowerScores }) => {
                         {scoreObj.score.category}: {scoreObj.score.score}
                     </Text>
                 ))}
-                <Text>Upper Section Total: </Text>
+                <Text>Upper Section Total: {upperTotal}</Text>
             </View>
-            {/* <View style={styles.section}>
+            <View style={styles.section}>
                 {lowerScores.map((scoreObj, idx) => (
                     <Text
-                        style={scoreObj.isLocked ? styles.locked : styles.unLocked}
+                        style={scoreObj.score.isLocked ? styles.locked : styles.unLocked}
                         onPress={() => lockScore(scoreObj)}
                         key={idx}
                     >
-                        {scoreObj.category}: {scoreObj.score}
+                        {scoreObj.score.category}: {scoreObj.score.score}
                     </Text>
                 ))}
-                <Text>Lower Section Total: </Text>
-            </View> */}
+                <Text>Lower Section Total: {lowerTotal}</Text>
+            </View>
         </View>
     );
 }
