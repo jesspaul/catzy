@@ -30,15 +30,9 @@ export default function App() {
 
   const [roll, setRoll] = useState(0);
   const [round, setRound] = useState({
-    number: 0,
+    number: 1,
     selection: null,
-  });
-
-  // when player selects a score, prompt to go to next round
-  // after three rolls, player must select a score to go to next round
-  // player cannot advance to next round without selecting a score
-  // player can only select one score per round, but needs to save scores from previous rounds
-  
+  });  
 
   const rollDice = () => {
     dice.forEach(dieObj => {
@@ -376,7 +370,7 @@ export default function App() {
     setChanceScore(chanceScoreOriginal);
     setYahtzeeScore(yahtzeeScoreOriginal);
     setRound({
-      number: 0,
+      number: 1,
       selection: null,
     });
   };
