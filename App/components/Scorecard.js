@@ -1,15 +1,13 @@
 import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 
-const Scorecard = ({ upperScores, lowerScores }) => {
-    const lockScore = (scoreObj) => {
-        if (!scoreObj.isLocked) {
-            scoreObj.setter(prevState => ({
-                ...prevState,
-                isLocked: scoreObj.isLocked ? false : true
-            }));
-        }
-    };
+const Scorecard = ({ upperScores, lowerScores, setRound }) => {
+    const toggleSelection = (scoreObj) => {
+        setRound(prevState => ({
+            ...prevState,
+            selection: prevState.selection === null ? scoreObj : null
+        }));
+    }
 
     let lockedUpper = upperScores.filter(scoreObj => scoreObj.score.isLocked);
     let lockedLower = lowerScores.filter(scoreObj => scoreObj.score.isLocked);
@@ -30,7 +28,7 @@ const Scorecard = ({ upperScores, lowerScores }) => {
                 {upperScores.map((scoreObj, idx) => (
                     <Text
                         style={scoreObj.score.isLocked ? styles.locked : styles.unLocked}
-                        onPress={() => lockScore(scoreObj)}
+                        onPress={() => toggleSelection(scoreObj)}
                         key={idx}
                     >
                         {scoreObj.score.category}: {scoreObj.score.score}
@@ -43,7 +41,7 @@ const Scorecard = ({ upperScores, lowerScores }) => {
                 {lowerScores.map((scoreObj, idx) => (
                     <Text
                         style={scoreObj.score.isLocked ? styles.locked : styles.unLocked}
-                        onPress={() => lockScore(scoreObj)}
+                        onPress={() => toggleSelection(scoreObj)}
                         key={idx}
                     >
                         {scoreObj.score.category}: {scoreObj.score.score}
