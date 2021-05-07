@@ -403,11 +403,11 @@ export default function App() {
             </>
           ) : (roll < 3 ? (
             <Button title='Roll!' onPress={rollDice} />
+            ) : (round.selection === null ? (
+              <Text>Make a Selection</Text>
             ) : (
-              <>
-              <Text>Roll Over</Text>
               <Button title='Next Round' onPress={resetRoll} />
-              </>
+            )
           ))}
         </View>
       </View>
