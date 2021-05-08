@@ -405,18 +405,26 @@ export default function App() {
 
         <View style={styles.diceSection}>
           <Text style={{fontSize: 20}}>Round Selection: {round.selection && round.selection.score.category}</Text>
-          <Text style={{fontSize: 20}}>Round: {round.number}</Text>
-          <Text style={{fontSize: 20}}>Roll: {roll}</Text>
+          {
+            round.number === 13 && round.selection ? (
+              <>
+              <Text style={{fontSize: 20}}>Game Over</Text>
+              <Text style={{fontSize: 20}}>Score: {upperTotal + lowerTotal + upperBonus}</Text>
+              </>
+            ) : (
+              <>
+              <Text style={{fontSize: 20}}>Round: {round.number}</Text>
+              <Text style={{fontSize: 20}}>Roll: {roll}</Text>
+              </>
+            )
+          }
           <View style={styles.diceContainer}>
             { dice.map((dieObj, idx) => (
               <Dice key={idx} value={dieObj.dieVar.value} isLocked={dieObj.dieVar.isLocked} setDie={dieObj.setDieVar} />
             ))}
           </View>
-          { (round.number === 13 && roll === 3) ? (
-            <>
-            <Text>Game Over</Text>
+          { (round.number === 13 && round.selection) ? (
             <Button title='Play Again' onPress={resetGame} />
-            </>
           ) : (roll < 3 && round.selection === null ? (
             <Button title='Roll!' onPress={rollDice} />
             ) : (round.selection === null ? (
