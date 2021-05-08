@@ -4,25 +4,31 @@ import Dice from './App/components/Dice';
 import Scorecard from './App/components/Scorecard';
 
 export default function App() {
-  const dieOriginalState = 'dice-d6';
+  const dieOriginalValue = 0;
+  const dieOriginalIcon = 'dice-d6';
   const [die0, setDie0] = useState({
-    value: dieOriginalState,
+    value: dieOriginalValue,
+    icon: dieOriginalIcon,
     isLocked: false
   });
   const [die1, setDie1] = useState({
-    value: dieOriginalState,
+    value: dieOriginalValue,
+    icon: dieOriginalIcon,
     isLocked: false
   });
   const [die2, setDie2] = useState({
-    value: dieOriginalState,
+    value: dieOriginalValue,
+    icon: dieOriginalIcon,
     isLocked: false
   });
   const [die3, setDie3] = useState({
-    value: dieOriginalState,
+    value: dieOriginalValue,
+    icon: dieOriginalIcon,
     isLocked: false
   });
   const [die4, setDie4] = useState({
-    value: dieOriginalState,
+    value: dieOriginalValue,
+    icon: dieOriginalIcon,
     isLocked: false
   });
 
@@ -54,7 +60,7 @@ export default function App() {
         }
         dieObj.setDieVar(prevState => ({
           ...prevState,
-          value: icon
+          icon: icon
         }));
       }
     });
@@ -355,7 +361,8 @@ export default function App() {
     if (round.selection !== null) {
       dice.forEach(dieObj => {
         dieObj.setDieVar({
-          value: dieOriginalState,
+          value: dieOriginalValue,
+          icon: dieOriginalIcon,
           isLocked: false
         });
       });
@@ -386,7 +393,8 @@ export default function App() {
   const resetGame = () => {
     dice.forEach(dieObj => {
       dieObj.setDieVar({
-        value: dieOriginalState,
+        value: dieOriginalValue,
+        icon: dieOriginalIcon,
         isLocked: false
       });
     });
@@ -415,10 +423,17 @@ export default function App() {
     <View style={styles.container}>
       <Text style={styles.header} onPress={resetGame}>Yatzy!</Text>
       <View style={styles.gameboard}>
-        <Scorecard upperScores={upperScores} lowerScores={lowerScores} setRound={setRound} upperTotal={upperTotal} lowerTotal={lowerTotal} upperBonus={upperBonus} />
+        <Scorecard
+          upperScores={upperScores}
+          lowerScores={lowerScores}
+          setRound={setRound}
+          upperTotal={upperTotal}
+          lowerTotal={lowerTotal}
+          upperBonus={upperBonus}
+          round={round}
+        />
 
         <View style={styles.diceSection}>
-          <Text style={{fontSize: 20}}>Round Selection: {round.selection && round.selection.score.category}</Text>
           {
             round.number === 13 && round.selection ? (
               <>
@@ -427,14 +442,16 @@ export default function App() {
               </>
             ) : (
               <>
-              <Text style={{fontSize: 20}}>Round: {round.number}</Text>
-              <Text style={{fontSize: 20}}>Roll: {roll}</Text>
+              <View style={styles.gameInfo}>
+                <Text style={{fontSize: 20}}>Round: {round.number}</Text>
+                <Text style={{fontSize: 20}}>Roll: {roll}</Text>
+              </View>
               </>
             )
           }
           <View style={styles.diceContainer}>
             { dice.map((dieObj, idx) => (
-              <Dice key={idx} value={dieObj.dieVar.value} isLocked={dieObj.dieVar.isLocked} setDie={dieObj.setDieVar} />
+              <Dice key={idx} icon={dieObj.dieVar.icon} isLocked={dieObj.dieVar.isLocked} setDie={dieObj.setDieVar} />
             ))}
           </View>
           { (round.number === 13 && round.selection) ? (
@@ -456,7 +473,7 @@ export default function App() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: 'white',
     alignItems: 'center',
     justifyContent: 'center',
   },
@@ -468,15 +485,26 @@ const styles = StyleSheet.create({
 
   diceSection: {
     alignItems: 'center',
-    backgroundColor: 'wheat',
     justifyContent: 'center'
   },
 
   header: {
-    fontSize: 40
+    fontSize: 40,
+    fontWeight: 'bold',
+    marginVertical: 10
   },
 
   gameboard: {
-    flexDirection: 'row'
+    flex: 1,
+    width: '100%',
+    paddingHorizontal: 60,
+    flexDirection: 'row',
+    justifyContent: 'space-between'
+  },
+
+  gameInfo: {
+    width: 300,
+    flexDirection: 'row',
+    justifyContent: 'space-between'
   }
 });

@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 
-const Scorecard = ({ upperScores, lowerScores, setRound, upperTotal, lowerTotal, upperBonus }) => {
+const Scorecard = ({ upperScores, lowerScores, setRound, upperTotal, lowerTotal, upperBonus, round }) => {
     const toggleSelection = (scoreObj) => {
         if (!scoreObj.score.isLocked) {
             setRound(prevState => ({
@@ -13,12 +13,12 @@ const Scorecard = ({ upperScores, lowerScores, setRound, upperTotal, lowerTotal,
 
     return (
         <View>
-            <Text style={styles.title}>Scorecard!</Text>
+            {/* <Text style={styles.title}>Score</Text> */}
             <View style={styles.container}>
                 <View style={styles.section}>
                     {upperScores.map((scoreObj, idx) => (
                         <Text
-                            style={scoreObj.score.isLocked ? styles.locked : styles.unLocked}
+                            style={scoreObj.score.isLocked || round.selection?.score.category === scoreObj.score.category ? styles.locked : styles.unLocked}
                             onPress={() => toggleSelection(scoreObj)}
                             key={idx}
                         >
@@ -31,7 +31,7 @@ const Scorecard = ({ upperScores, lowerScores, setRound, upperTotal, lowerTotal,
                 <View style={styles.section}>
                     {lowerScores.map((scoreObj, idx) => (
                         <Text
-                            style={scoreObj.score.isLocked ? styles.locked : styles.unLocked}
+                            style={scoreObj.score.isLocked || round.selection?.score.category === scoreObj.score.category ? styles.locked : styles.unLocked}
                             onPress={() => toggleSelection(scoreObj)}
                             key={idx}
                         >
@@ -47,35 +47,44 @@ const Scorecard = ({ upperScores, lowerScores, setRound, upperTotal, lowerTotal,
 
 const styles = StyleSheet.create({
     container: {
-        justifyContent: 'center',
-        backgroundColor: 'pink',
-        flexDirection: 'row'
+        justifyContent: 'center'
     },
 
     locked: {
-        color: 'red',
+        backgroundColor: 'lightgray',
         fontSize: 20,
-        marginHorizontal: 10
+        padding: 5,
     },
 
     unLocked: {
         fontSize: 20,
-        marginHorizontal: 10
+        marginHorizontal: 10,
+        padding: 5,
+        backgroundColor: 'lightblue'
     },
 
     title: {
         fontSize: 25,
         fontWeight: 'bold',
-        textAlign: 'center'
+        textAlign: 'center',
     },
 
     section: {
         marginHorizontal: 5,
+        marginVertical: 5,
+        flexWrap: 'wrap',
+        justifyContent: 'space-between',
+        alignItems: 'flex-end',
+        height: 150,
+        width: 400,
+        backgroundColor: 'pink'
     },
 
     total: {
         fontSize: 20,
-        marginHorizontal: 5,
+        marginHorizontal: 10,
+        padding: 5,
+        backgroundColor: 'lightblue'
     },
 });
  
