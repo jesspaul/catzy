@@ -417,7 +417,7 @@ export default function App() {
             <Text>Game Over</Text>
             <Button title='Play Again' onPress={resetGame} />
             </>
-          ) : (roll < 3 ? (
+          ) : (roll < 3 && round.selection === null ? (
             <Button title='Roll!' onPress={rollDice} />
             ) : (round.selection === null ? (
               <Text>Make a Selection</Text>
