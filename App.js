@@ -140,7 +140,7 @@ export default function App() {
   const smallStraightOriginal = {category: 'Small Straight', score: 0, isLocked: false};
   const largeStraightOriginal = {category: 'Large Straight', score: 0, isLocked: false};
   const chanceScoreOriginal = {category: 'Chance', score: 0, isLocked: false};
-  const yahtzeeScoreOriginal = {category: 'Yahtzee', score: 0, isLocked: false};
+  const yatzyScoreOriginal = {category: 'Yatzy', score: 0, isLocked: false};
 
   const [threeKind, setThreeKind] = useState(threeKindOriginal);
   const [fourKind, setFourKind] = useState(fourKindOriginal);
@@ -148,7 +148,7 @@ export default function App() {
   const [smallStraight, setSmallStraight] = useState(smallStraightOriginal);
   const [largeStraight, setLargeStraight] = useState(largeStraightOriginal);
   const [chanceScore, setChanceScore] = useState(chanceScoreOriginal);
-  const [yahtzeeScore, setYahtzeeScore] = useState(yahtzeeScoreOriginal);
+  const [yatzyScore, setYatzyScore] = useState(yatzyScoreOriginal);
 
   let lowerScores = [{
     score: threeKind,
@@ -169,8 +169,8 @@ export default function App() {
     score: chanceScore,
     setter: setChanceScore
   }, {
-    score: yahtzeeScore,
-    setter: setYahtzeeScore
+    score: yatzyScore,
+    setter: setYatzyScore
   }];
 
   const findOfKindScore = () => {
@@ -235,15 +235,15 @@ export default function App() {
 
     if (valueCount.some(obj => obj.count === 5)) {
       valueCount.forEach(obj => {
-        if (obj.count === 5 && !yahtzeeScore.isLocked) {
-          setYahtzeeScore(prevState => ({
+        if (obj.count === 5 && !yatzyScore.isLocked) {
+          setYatzyScore(prevState => ({
             ...prevState,
             score: 50
           }));
         }
       });
-    } else if (!yahtzeeScore.isLocked) {
-      setYahtzeeScore(prevState => ({
+    } else if (!yatzyScore.isLocked) {
+      setYatzyScore(prevState => ({
         ...prevState,
         score: 0
       }));
@@ -360,7 +360,7 @@ export default function App() {
       !fullHouse.isLocked && round.selection.score.category !== fullHouse.category && setFullHouse(fullHouseOriginal);
       !smallStraight.isLocked && round.selection.score.category !== smallStraight.category && setSmallStraight(smallStraightOriginal);
       !largeStraight.isLocked && round.selection.score.category !== largeStraight.category && setLargeStraight(largeStraightOriginal);
-      !yahtzeeScore.isLocked && round.selection.score.category !== yahtzeeScore.category && setYahtzeeScore(yahtzeeScoreOriginal);
+      !yatzyScore.isLocked && round.selection.score.category !== yatzyScore.category && setYatzyScore(yatzyScoreOriginal);
       setRound(prevState => ({
         ...prevState,
         selection: null,
@@ -389,7 +389,7 @@ export default function App() {
     setSmallStraight(smallStraightOriginal);
     setLargeStraight(largeStraightOriginal);
     setChanceScore(chanceScoreOriginal);
-    setYahtzeeScore(yahtzeeScoreOriginal);
+    setYatzyScore(yatzyScoreOriginal);
     setUpperBonus(upperBonusOriginal);
     setRound({
       number: 1,
@@ -399,7 +399,7 @@ export default function App() {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.header} onPress={resetGame}>Yahtzee!</Text>
+      <Text style={styles.header} onPress={resetGame}>Yatzy!</Text>
       <View style={styles.gameboard}>
         <Scorecard upperScores={upperScores} lowerScores={lowerScores} setRound={setRound} upperTotal={upperTotal} lowerTotal={lowerTotal} upperBonus={upperBonus} />
 
