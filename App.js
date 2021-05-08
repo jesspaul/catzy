@@ -4,7 +4,7 @@ import Dice from './App/components/Dice';
 import Scorecard from './App/components/Scorecard';
 
 export default function App() {
-  const dieOriginalState = 'Dice';
+  const dieOriginalState = 'dice-d6';
   const [die0, setDie0] = useState({
     value: dieOriginalState,
     isLocked: false
@@ -38,9 +38,23 @@ export default function App() {
     dice.forEach(dieObj => {
       if (!dieObj.dieVar.isLocked) {
         let randomNum = Math.floor(Math.random()*6) + 1;
+        let icon;
+        if (randomNum === 1) {
+          icon = 'dice-one';
+        } else if (randomNum === 2) {
+          icon = 'dice-two';
+        } else if (randomNum === 3) {
+          icon = 'dice-three';
+        } else if (randomNum === 4) {
+          icon = 'dice-four';
+        } else if (randomNum === 5) {
+          icon = 'dice-five';
+        } else if (randomNum === 6) {
+          icon = 'dice-six';
+        }
         dieObj.setDieVar(prevState => ({
           ...prevState,
-          value: randomNum
+          value: icon
         }));
       }
     });
