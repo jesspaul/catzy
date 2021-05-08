@@ -55,6 +55,7 @@ export default function App() {
   const fourOriginal = {category: 'Fours', score: 0, isLocked: false};
   const fiveOriginal = {category: 'Fives', score: 0, isLocked: false};
   const sixOriginal = {category: 'Sixes', score: 0, isLocked: false};
+  const upperBonusOriginal = 0;
 
   const [oneScore, setOneScore] = useState(oneOriginal);
   const [twoScore, setTwoScore] = useState(twoOriginal);
@@ -62,6 +63,7 @@ export default function App() {
   const [fourScore, setFourScore] = useState(fourOriginal);
   const [fiveScore, setFiveScore] = useState(fiveOriginal);
   const [sixScore, setSixScore] = useState(sixOriginal);
+  const [upperBonus, setUpperBonus] = useState(upperBonusOriginal);
 
   let upperScores = [{
     score: oneScore,
@@ -300,11 +302,30 @@ export default function App() {
     }
   };
 
+  let lockedUpper = upperScores.filter(scoreObj => scoreObj.score.isLocked);
+  let lockedLower = lowerScores.filter(scoreObj => scoreObj.score.isLocked);
+
+  let upperTotal = lockedUpper.reduce((total, current) => {
+      return total + current.score.score;
+  }, 0);
+
+  let lowerTotal = lockedLower.reduce((total, current) => {
+      return total + current.score.score;
+  }, 0);
+
+  const findUpperBonus = () => {
+    if (upperTotal > 63) {
+      setUpperBonus(50);
+    }
+  }
+
+
   useEffect(() => {
     findUpperScore();
     findOfKindScore();
     findStraightScore();
     findChanceScore();
+    findUpperBonus();
   }, [die0, die1, die2, die3, die4]);
 
   const lockScore = (scoreObj) => {
@@ -369,6 +390,7 @@ export default function App() {
     setLargeStraight(largeStraightOriginal);
     setChanceScore(chanceScoreOriginal);
     setYahtzeeScore(yahtzeeScoreOriginal);
+    setUpperBonus(upperBonusOriginal);
     setRound({
       number: 1,
       selection: null,
@@ -379,7 +401,7 @@ export default function App() {
     <View style={styles.container}>
       <Text style={styles.header} onPress={resetGame}>Yahtzee!</Text>
       <View style={styles.gameboard}>
-        <Scorecard upperScores={upperScores} lowerScores={lowerScores} setRound={setRound} />
+        <Scorecard upperScores={upperScores} lowerScores={lowerScores} setRound={setRound} upperTotal={upperTotal} lowerTotal={lowerTotal} upperBonus={upperBonus} />
 
         <View style={styles.diceSection}>
           <Text style={{fontSize: 20}}>Round Selection: {round.selection && round.selection.score.category}</Text>

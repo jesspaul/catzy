@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 
-const Scorecard = ({ upperScores, lowerScores, setRound }) => {
+const Scorecard = ({ upperScores, lowerScores, setRound, upperTotal, lowerTotal, upperBonus }) => {
     const toggleSelection = (scoreObj) => {
         setRound(prevState => ({
             ...prevState,
@@ -9,20 +9,9 @@ const Scorecard = ({ upperScores, lowerScores, setRound }) => {
         }));
     }
 
-    let lockedUpper = upperScores.filter(scoreObj => scoreObj.score.isLocked);
-    let lockedLower = lowerScores.filter(scoreObj => scoreObj.score.isLocked);
-
-    let upperTotal = lockedUpper.reduce((total, current) => {
-        return total + current.score.score;
-    }, 0);
-
-    let lowerTotal = lockedLower.reduce((total, current) => {
-        return total + current.score.score;
-    }, 0);
-
     return (
         <View>
-        <Text style={styles.title} onPress={() => console.log(lockedUpper)}>Scorecard!</Text>
+        <Text style={styles.title}>Scorecard!</Text>
         <View style={styles.container}>
             <View style={styles.section}>
                 {upperScores.map((scoreObj, idx) => (
@@ -34,7 +23,7 @@ const Scorecard = ({ upperScores, lowerScores, setRound }) => {
                         {scoreObj.score.category}: {scoreObj.score.score}
                     </Text>
                 ))}
-                <Text style={styles.total}>Upper Bonus: {}</Text>
+                <Text style={styles.total}>Upper Bonus: {upperBonus}</Text>
                 <Text style={styles.total}>Upper Total: {upperTotal}</Text>
             </View>
             <View style={styles.section}>
