@@ -29,8 +29,11 @@ export default function App() {
   let dice = [{dieVar: die0, setDieVar: setDie0}, {dieVar: die1, setDieVar: setDie1}, {dieVar: die2, setDieVar: setDie2}, {dieVar: die3, setDieVar: setDie3}, {dieVar: die4, setDieVar: setDie4}];
 
   const [roll, setRoll] = useState(0);
-  const [round, setRound] = useState(0);
-  
+  const [round, setRound] = useState({
+    number: 1,
+    selection: null,
+  });  
+
   const rollDice = () => {
     dice.forEach(dieObj => {
       if (!dieObj.dieVar.isLocked) {
@@ -52,6 +55,7 @@ export default function App() {
   const fourOriginal = {category: 'Fours', score: 0, isLocked: false};
   const fiveOriginal = {category: 'Fives', score: 0, isLocked: false};
   const sixOriginal = {category: 'Sixes', score: 0, isLocked: false};
+  const upperBonusOriginal = 0;
 
   const [oneScore, setOneScore] = useState(oneOriginal);
   const [twoScore, setTwoScore] = useState(twoOriginal);
@@ -59,6 +63,7 @@ export default function App() {
   const [fourScore, setFourScore] = useState(fourOriginal);
   const [fiveScore, setFiveScore] = useState(fiveOriginal);
   const [sixScore, setSixScore] = useState(sixOriginal);
+  const [upperBonus, setUpperBonus] = useState(upperBonusOriginal);
 
   let upperScores = [{
     score: oneScore,
@@ -297,34 +302,71 @@ export default function App() {
     }
   };
 
+  let lockedUpper = upperScores.filter(scoreObj => scoreObj.score.isLocked);
+  let lockedLower = lowerScores.filter(scoreObj => scoreObj.score.isLocked);
+
+  let upperTotal = lockedUpper.reduce((total, current) => {
+      return total + current.score.score;
+  }, 0);
+
+  let lowerTotal = lockedLower.reduce((total, current) => {
+      return total + current.score.score;
+  }, 0);
+
+  const findUpperBonus = () => {
+    if (upperTotal > 63) {
+      setUpperBonus(50);
+    }
+  }
+
+
   useEffect(() => {
     findUpperScore();
     findOfKindScore();
     findStraightScore();
     findChanceScore();
+    findUpperBonus();
   }, [die0, die1, die2, die3, die4]);
 
+  const lockScore = (scoreObj) => {
+    if (!scoreObj.score.isLocked) {
+      scoreObj.setter(prevState => ({
+        ...prevState,
+        isLocked: true
+      }));
+    }
+  };
+
   const resetRoll = () => {
-    dice.forEach(dieObj => {
-      dieObj.setDieVar({
-        value: dieOriginalState,
-        isLocked: false
+    if (round.selection !== null) {
+      dice.forEach(dieObj => {
+        dieObj.setDieVar({
+          value: dieOriginalState,
+          isLocked: false
+        });
       });
-    });
-    setRoll(0);
-    !oneScore.isLocked && setOneScore(oneOriginal);
-    !twoScore.isLocked && setTwoScore(twoOriginal);
-    !threeScore.isLocked && setThreeScore(threeOriginal);
-    !fourScore.isLocked && setFourScore(fourOriginal);
-    !fiveScore.isLocked && setFiveScore(fiveOriginal);
-    !sixScore.isLocked && setSixScore(sixOriginal);
-    !threeKind.isLocked && setThreeKind(threeKindOriginal);
-    !fourKind.isLocked && setFourKind(fourKindOriginal);
-    !fullHouse.isLocked && setFullHouse(fullHouseOriginal);
-    !smallStraight.isLocked && setSmallStraight(smallStraightOriginal);
-    !largeStraight.isLocked && setLargeStraight(largeStraightOriginal);
-    !yahtzeeScore.isLocked && setYahtzeeScore(yahtzeeScoreOriginal);
-    setRound(round + 1);
+
+      lockScore(round.selection);
+
+      setRoll(0);
+      !oneScore.isLocked && round.selection.score.category !== oneScore.category && setOneScore(oneOriginal);
+      !twoScore.isLocked && round.selection.score.category !== twoScore.category && setTwoScore(twoOriginal);
+      !threeScore.isLocked && round.selection.score.category !== threeScore.category && setThreeScore(threeOriginal);
+      !fourScore.isLocked && round.selection.score.category !== fourScore.category && setFourScore(fourOriginal);
+      !fiveScore.isLocked && round.selection.score.category !== fiveScore.category && setFiveScore(fiveOriginal);
+      !sixScore.isLocked && round.selection.score.category !== sixScore.category && setSixScore(sixOriginal);
+      !threeKind.isLocked && round.selection.score.category !== threeKind.category && setThreeKind(threeKindOriginal);
+      !fourKind.isLocked && round.selection.score.category !== fourKind.category && setFourKind(fourKindOriginal);
+      !fullHouse.isLocked && round.selection.score.category !== fullHouse.category && setFullHouse(fullHouseOriginal);
+      !smallStraight.isLocked && round.selection.score.category !== smallStraight.category && setSmallStraight(smallStraightOriginal);
+      !largeStraight.isLocked && round.selection.score.category !== largeStraight.category && setLargeStraight(largeStraightOriginal);
+      !yahtzeeScore.isLocked && round.selection.score.category !== yahtzeeScore.category && setYahtzeeScore(yahtzeeScoreOriginal);
+      setRound(prevState => ({
+        ...prevState,
+        selection: null,
+        number: prevState.number + 1
+      }));
+    }
   };
 
   const resetGame = () => {
@@ -348,35 +390,48 @@ export default function App() {
     setLargeStraight(largeStraightOriginal);
     setChanceScore(chanceScoreOriginal);
     setYahtzeeScore(yahtzeeScoreOriginal);
-    setRound(0);
+    setUpperBonus(upperBonusOriginal);
+    setRound({
+      number: 1,
+      selection: null,
+    });
   };
 
   return (
     <View style={styles.container}>
       <Text style={styles.header} onPress={resetGame}>Yahtzee!</Text>
       <View style={styles.gameboard}>
-        <Scorecard upperScores={upperScores} lowerScores={lowerScores}/>
+        <Scorecard upperScores={upperScores} lowerScores={lowerScores} setRound={setRound} upperTotal={upperTotal} lowerTotal={lowerTotal} upperBonus={upperBonus} />
 
         <View style={styles.diceSection}>
-          <Text style={{fontSize: 20}}>Round: {round}</Text>
-          <Text style={{fontSize: 20}}>Roll: {roll}</Text>
+          <Text style={{fontSize: 20}}>Round Selection: {round.selection && round.selection.score.category}</Text>
+          {
+            round.number === 13 && round.selection ? (
+              <>
+              <Text style={{fontSize: 20}}>Game Over</Text>
+              <Text style={{fontSize: 20}}>Score: {upperTotal + lowerTotal + upperBonus}</Text>
+              </>
+            ) : (
+              <>
+              <Text style={{fontSize: 20}}>Round: {round.number}</Text>
+              <Text style={{fontSize: 20}}>Roll: {roll}</Text>
+              </>
+            )
+          }
           <View style={styles.diceContainer}>
             { dice.map((dieObj, idx) => (
               <Dice key={idx} value={dieObj.dieVar.value} isLocked={dieObj.dieVar.isLocked} setDie={dieObj.setDieVar} />
             ))}
           </View>
-          { (round === 13 && roll === 3) ? (
-            <>
-            <Text>Game Over</Text>
+          { (round.number === 13 && round.selection) ? (
             <Button title='Play Again' onPress={resetGame} />
-            </>
-          ) : (roll < 3 ? (
+          ) : (roll < 3 && round.selection === null ? (
             <Button title='Roll!' onPress={rollDice} />
+            ) : (round.selection === null ? (
+              <Text>Make a Selection</Text>
             ) : (
-              <>
-              <Text>Roll Over</Text>
               <Button title='Next Round' onPress={resetRoll} />
-              </>
+            )
           ))}
         </View>
       </View>
