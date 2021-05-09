@@ -52,6 +52,8 @@ const styles = StyleSheet.create({
 
     locked: {
         backgroundColor: 'lightgray',
+        marginHorizontal: 10,
+        width: 180,
         fontSize: 20,
         padding: 5,
     },
@@ -60,7 +62,7 @@ const styles = StyleSheet.create({
         fontSize: 20,
         marginHorizontal: 10,
         padding: 5,
-        backgroundColor: 'lightblue'
+        width: 180
     },
 
     title: {
@@ -74,17 +76,15 @@ const styles = StyleSheet.create({
         marginVertical: 5,
         flexWrap: 'wrap',
         justifyContent: 'space-between',
-        alignItems: 'flex-end',
         height: 150,
-        width: 400,
-        backgroundColor: 'pink'
+        width: 400
     },
 
     total: {
         fontSize: 20,
         marginHorizontal: 10,
         padding: 5,
-        backgroundColor: 'lightblue'
+        width: 180
     },
 });
  
