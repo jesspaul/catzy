@@ -1,28 +1,35 @@
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, Text, View, Button } from 'react-native';
+import { StyleSheet, Text, View, Button, SafeAreaView } from 'react-native';
 import Dice from './App/components/Dice';
 import Scorecard from './App/components/Scorecard';
+import colors from './App/constants/colors';
 
 export default function App() {
-  const dieOriginalState = 'Dice';
+  const dieOriginalValue = 0;
+  const dieOriginalIcon = 'dice-d6';
   const [die0, setDie0] = useState({
-    value: dieOriginalState,
+    value: dieOriginalValue,
+    icon: dieOriginalIcon,
     isLocked: false
   });
   const [die1, setDie1] = useState({
-    value: dieOriginalState,
+    value: dieOriginalValue,
+    icon: dieOriginalIcon,
     isLocked: false
   });
   const [die2, setDie2] = useState({
-    value: dieOriginalState,
+    value: dieOriginalValue,
+    icon: dieOriginalIcon,
     isLocked: false
   });
   const [die3, setDie3] = useState({
-    value: dieOriginalState,
+    value: dieOriginalValue,
+    icon: dieOriginalIcon,
     isLocked: false
   });
   const [die4, setDie4] = useState({
-    value: dieOriginalState,
+    value: dieOriginalValue,
+    icon: dieOriginalIcon,
     isLocked: false
   });
 
@@ -38,9 +45,23 @@ export default function App() {
     dice.forEach(dieObj => {
       if (!dieObj.dieVar.isLocked) {
         let randomNum = Math.floor(Math.random()*6) + 1;
+        let icon;
+        if (randomNum === 1) {
+          icon = 'dice-one';
+        } else if (randomNum === 2) {
+          icon = 'dice-two';
+        } else if (randomNum === 3) {
+          icon = 'dice-three';
+        } else if (randomNum === 4) {
+          icon = 'dice-four';
+        } else if (randomNum === 5) {
+          icon = 'dice-five';
+        } else if (randomNum === 6) {
+          icon = 'dice-six';
+        }
         dieObj.setDieVar(prevState => ({
           ...prevState,
-          value: randomNum
+          icon: icon
         }));
       }
     });
@@ -341,7 +362,8 @@ export default function App() {
     if (round.selection !== null) {
       dice.forEach(dieObj => {
         dieObj.setDieVar({
-          value: dieOriginalState,
+          value: dieOriginalValue,
+          icon: dieOriginalIcon,
           isLocked: false
         });
       });
@@ -372,7 +394,8 @@ export default function App() {
   const resetGame = () => {
     dice.forEach(dieObj => {
       dieObj.setDieVar({
-        value: dieOriginalState,
+        value: dieOriginalValue,
+        icon: dieOriginalIcon,
         isLocked: false
       });
     });
@@ -398,51 +421,66 @@ export default function App() {
   };
 
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
       <Text style={styles.header} onPress={resetGame}>Yatzy!</Text>
       <View style={styles.gameboard}>
-        <Scorecard upperScores={upperScores} lowerScores={lowerScores} setRound={setRound} upperTotal={upperTotal} lowerTotal={lowerTotal} upperBonus={upperBonus} />
+        <Scorecard
+          upperScores={upperScores}
+          lowerScores={lowerScores}
+          setRound={setRound}
+          upperTotal={upperTotal}
+          lowerTotal={lowerTotal}
+          upperBonus={upperBonus}
+          round={round}
+        />
 
         <View style={styles.diceSection}>
-          <Text style={{fontSize: 20}}>Round Selection: {round.selection && round.selection.score.category}</Text>
           {
             round.number === 13 && round.selection ? (
               <>
-              <Text style={{fontSize: 20}}>Game Over</Text>
-              <Text style={{fontSize: 20}}>Score: {upperTotal + lowerTotal + upperBonus}</Text>
+              <Text style={styles.gameText}>Game Over</Text>
+              <Text style={styles.gameText}>Score: {upperTotal + lowerTotal + upperBonus}</Text>
               </>
             ) : (
               <>
-              <Text style={{fontSize: 20}}>Round: {round.number}</Text>
-              <Text style={{fontSize: 20}}>Roll: {roll}</Text>
+              <View style={styles.gameInfo}>
+                <Text style={styles.gameText}>Round: {round.number}</Text>
+                <Text style={styles.gameText}>Roll: {roll}</Text>
+              </View>
               </>
             )
           }
           <View style={styles.diceContainer}>
             { dice.map((dieObj, idx) => (
-              <Dice key={idx} value={dieObj.dieVar.value} isLocked={dieObj.dieVar.isLocked} setDie={dieObj.setDieVar} />
+              <Dice key={idx} icon={dieObj.dieVar.icon} isLocked={dieObj.dieVar.isLocked} setDie={dieObj.setDieVar} />
             ))}
           </View>
           { (round.number === 13 && round.selection) ? (
-            <Button title='Play Again' onPress={resetGame} />
+            <View style={styles.button}>
+              <Button color={colors.text} title='Play Again' onPress={resetGame} />
+            </View>
           ) : (roll < 3 && round.selection === null ? (
-            <Button title='Roll!' onPress={rollDice} />
+            <View style={styles.button}>
+              <Button color='orange' title='Roll!' onPress={rollDice} />
+            </View>
             ) : (round.selection === null ? (
-              <Text>Make a Selection</Text>
+              <Text style={[styles.gameText, {marginTop: 14}]}>Make a Selection</Text>
             ) : (
-              <Button title='Next Round' onPress={resetRoll} />
+              <View style={styles.button}>
+                <Button color={colors.text} title='Next Round' onPress={resetRoll} />
+              </View>
             )
           ))}
         </View>
       </View>
-    </View>
+    </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: colors.background,
     alignItems: 'center',
     justifyContent: 'center',
   },
@@ -454,15 +492,38 @@ const styles = StyleSheet.create({
 
   diceSection: {
     alignItems: 'center',
-    backgroundColor: 'wheat',
-    justifyContent: 'center'
+    justifyContent: 'center',
+    backgroundColor: colors.diceBg,
+    borderTopRightRadius: 12,
+    borderBottomRightRadius: 12
   },
 
   header: {
-    fontSize: 40
+    fontSize: 40,
+    fontWeight: 'bold',
+    marginVertical: 10,
+    color: colors.text
   },
 
   gameboard: {
-    flexDirection: 'row'
+    flex: 1,
+    flexDirection: 'row',
+    justifyContent: 'space-between'
+  },
+
+  gameInfo: {
+    width: 300,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
+
+  gameText: {
+    fontSize: 20,
+    color: colors.text
+  },
+
+  button: {
+    backgroundColor: colors.button,
+    borderRadius: 12
   }
 });

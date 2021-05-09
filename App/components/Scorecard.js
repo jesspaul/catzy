@@ -1,7 +1,8 @@
 import React from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import colors from '../constants/colors';
 
-const Scorecard = ({ upperScores, lowerScores, setRound, upperTotal, lowerTotal, upperBonus }) => {
+const Scorecard = ({ upperScores, lowerScores, setRound, upperTotal, lowerTotal, upperBonus, round }) => {
     const toggleSelection = (scoreObj) => {
         if (!scoreObj.score.isLocked) {
             setRound(prevState => ({
@@ -13,32 +14,61 @@ const Scorecard = ({ upperScores, lowerScores, setRound, upperTotal, lowerTotal,
 
     return (
         <View>
-            <Text style={styles.title}>Scorecard!</Text>
             <View style={styles.container}>
+            <Text style={styles.title}>Score</Text>
                 <View style={styles.section}>
                     {upperScores.map((scoreObj, idx) => (
-                        <Text
-                            style={scoreObj.score.isLocked ? styles.locked : styles.unLocked}
+                        <TouchableOpacity
+                            style={scoreObj.score.isLocked || round.selection?.score.category === scoreObj.score.category ? styles.locked : styles.textContainer}
                             onPress={() => toggleSelection(scoreObj)}
                             key={idx}
                         >
-                            {scoreObj.score.category}: {scoreObj.score.score}
-                        </Text>
+                            <Text
+                                style={styles.score}
+                            >
+                                {scoreObj.score.category}: 
+                            </Text>
+                            <Text
+                                style={styles.score}
+                            >
+                                {scoreObj.score.score}
+                            </Text>
+                        </TouchableOpacity>
                     ))}
-                    <Text style={styles.total}>Upper Bonus: {upperBonus}</Text>
-                    <Text style={styles.total}>Upper Total: {upperTotal}</Text>
+                    <View style={styles.textContainer}>
+                        <Text style={styles.score}>Upper Bonus: </Text>
+                        <Text style={styles.score}>{upperBonus}</Text>
+                    </View>
+                    <View style={styles.textContainer}>
+                        <Text style={[styles.score, {fontWeight: 'bold'}]}>Upper Total: </Text>
+                        <Text style={[styles.score, {fontWeight: 'bold'}]}>{upperTotal}</Text>
+                    </View>
                 </View>
                 <View style={styles.section}>
                     {lowerScores.map((scoreObj, idx) => (
-                        <Text
-                            style={scoreObj.score.isLocked ? styles.locked : styles.unLocked}
+                        <TouchableOpacity
+                            style={scoreObj.score.isLocked || round.selection?.score.category === scoreObj.score.category ? styles.locked : styles.textContainer}
                             onPress={() => toggleSelection(scoreObj)}
                             key={idx}
                         >
-                            {scoreObj.score.category}: {scoreObj.score.score}
-                        </Text>
+                            <Text
+                                onPress={() => toggleSelection(scoreObj)}
+                                style={styles.score}
+                            >
+                                {scoreObj.score.category}: 
+                            </Text>
+                            <Text
+                                onPress={() => toggleSelection(scoreObj)}
+                                style={styles.score}
+                            >
+                                {scoreObj.score.score}
+                            </Text>
+                        </TouchableOpacity>
                     ))}
-                    <Text style={styles.total}>Lower Total: {lowerTotal}</Text>
+                    <View style={styles.textContainer}>
+                        <Text style={[styles.score, {fontWeight: 'bold'}]}>Lower Total: </Text>
+                        <Text style={[styles.score, {fontWeight: 'bold'}]}>{lowerTotal}</Text>
+                    </View>
                 </View>
             </View>
         </View>
@@ -48,35 +78,49 @@ const Scorecard = ({ upperScores, lowerScores, setRound, upperTotal, lowerTotal,
 const styles = StyleSheet.create({
     container: {
         justifyContent: 'center',
-        backgroundColor: 'pink',
-        flexDirection: 'row'
+        backgroundColor: colors.scoreBg,
+        borderTopLeftRadius: 12,
+        borderBottomLeftRadius: 12
     },
 
     locked: {
-        color: 'red',
-        fontSize: 20,
-        marginHorizontal: 10
+        backgroundColor: colors.highlight,
+        width: 160,
+        fontSize: 18,
+        paddingHorizontal: 5,
+        paddingVertical: 5,
+        justifyContent: 'space-between',
+        flexDirection: 'row',
+        borderRadius: 12
     },
 
-    unLocked: {
-        fontSize: 20,
-        marginHorizontal: 10
+    textContainer: {
+        fontSize: 18,
+        paddingHorizontal: 5,
+        paddingVertical: 5,
+        width: 160,
+        justifyContent: 'space-between',
+        flexDirection: 'row'
     },
 
     title: {
         fontSize: 25,
         fontWeight: 'bold',
-        textAlign: 'center'
+        textAlign: 'center',
+        color: colors.text
     },
 
     section: {
         marginHorizontal: 5,
+        marginVertical: 3,
+        flexWrap: 'wrap',
+        height: 140,
     },
-
-    total: {
-        fontSize: 20,
-        marginHorizontal: 5,
-    },
+    
+    score: {
+        fontSize: 18,
+        color: colors.text
+    }
 });
  
 export default Scorecard;

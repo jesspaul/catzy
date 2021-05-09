@@ -1,7 +1,9 @@
 import React from 'react';
-import { TouchableOpacity, Text, StyleSheet } from 'react-native';
+import { TouchableOpacity, StyleSheet } from 'react-native';
+import { FontAwesome5 } from '@expo/vector-icons';
+import colors from '../constants/colors';
 
-const Dice = ({ value, isLocked, setDie }) => {
+const Dice = ({ icon, isLocked, setDie }) => {
     const lockDie = () => {
         setDie(prevState => ({
             ...prevState,
@@ -10,30 +12,23 @@ const Dice = ({ value, isLocked, setDie }) => {
     }
 
     return (
-        <TouchableOpacity style={styles.dice} onPress={lockDie}>
-            <Text style={isLocked ? styles.locked : styles.unLocked}>{value}</Text>
+        <TouchableOpacity onPress={lockDie}>
+            <FontAwesome5 style={isLocked ? styles.locked : styles.unLocked} name={icon} />
         </TouchableOpacity>
     );
 }
 
 const styles = StyleSheet.create({
-    dice: {
-        width: 40,
-        height: 40,
-        backgroundColor: 'lightblue',
-        marginHorizontal: 10,
-        justifyContent: 'center',
-        alignItems: 'center'
-    },
-    
     locked: {
-        color: 'red',
-        fontSize: 20
+        color: colors.lockedDice,
+        fontSize: 80,
+        marginHorizontal: 10,
     },
 
     unLocked: {
-        color: 'white',
-        fontSize: 20
+        color: colors.dice,
+        fontSize: 80,
+        marginHorizontal: 10
     }
 })
  
