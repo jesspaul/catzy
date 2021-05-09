@@ -461,7 +461,7 @@ export default function App() {
             </View>
           ) : (roll < 3 && round.selection === null ? (
             <View style={styles.button}>
-              <Button color={colors.text} title='Roll!' onPress={rollDice} />
+              <Button color='orange' title='Roll!' onPress={rollDice} />
             </View>
             ) : (round.selection === null ? (
               <Text style={[styles.gameText, {marginTop: 14}]}>Make a Selection</Text>
