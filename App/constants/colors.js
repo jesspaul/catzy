@@ -6,5 +6,7 @@ export default {
     diceBg: '#f2e2ff',
     scoreBg: '#e2eeff',
     text: '#5b5a5c',
+    buttonText: 'magenta',
+    // buttonText: '#D34F73', 
     button: '#ffffe3'
 }

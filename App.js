@@ -466,17 +466,17 @@ export default function App() {
           </View>
           { (round.number === 13 && round.selection) ? (
             <View style={styles.button}>
-              <Button color={colors.text} title='Play Again' onPress={resetGame} />
+              <Button color={colors.buttonText} title='Play Again' onPress={resetGame} />
             </View>
           ) : (roll < 3 && round.selection === null ? (
             <View style={styles.button}>
-              <Button color='orange' title='Roll!' onPress={rollDice} />
+              <Button color={colors.buttonText} title='Roll!' onPress={rollDice} />
             </View>
             ) : (round.selection === null ? (
               <Text style={[styles.gameText, {marginTop: 14}]}>Select a Score</Text>
             ) : (
               <View style={styles.button}>
-                <Button color={colors.text} title='Next Round' onPress={resetRoll} />
+                <Button color={colors.buttonText} title='Next Round' onPress={resetRoll} />
               </View>
             )
           ))}
@@ -540,6 +540,6 @@ const styles = EStyleSheet.create({
 
   button: {
     backgroundColor: colors.button,
-    borderRadius: '.8rem'
+    borderRadius: '.8rem',
   }
 });
