@@ -46,22 +46,30 @@ export default function App() {
       if (!dieObj.dieVar.isLocked) {
         let randomNum = Math.floor(Math.random()*6) + 1;
         let icon;
+        let number;
         if (randomNum === 1) {
           icon = 'dice-one';
+          number = 1;
         } else if (randomNum === 2) {
           icon = 'dice-two';
+          number = 2;
         } else if (randomNum === 3) {
           icon = 'dice-three';
+          number = 3;
         } else if (randomNum === 4) {
           icon = 'dice-four';
+          number = 4;
         } else if (randomNum === 5) {
           icon = 'dice-five';
+          number = 5;
         } else if (randomNum === 6) {
           icon = 'dice-six';
+          number = 6;
         }
         dieObj.setDieVar(prevState => ({
           ...prevState,
-          icon: icon
+          icon: icon,
+          value: number
         }));
       }
     });
@@ -464,7 +472,7 @@ export default function App() {
               <Button color='orange' title='Roll!' onPress={rollDice} />
             </View>
             ) : (round.selection === null ? (
-              <Text style={[styles.gameText, {marginTop: 14}]}>Make a Selection</Text>
+              <Text style={[styles.gameText, {marginTop: 14}]}>Select a Score</Text>
             ) : (
               <View style={styles.button}>
                 <Button color={colors.text} title='Next Round' onPress={resetRoll} />
