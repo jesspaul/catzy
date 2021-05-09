@@ -456,13 +456,19 @@ export default function App() {
             ))}
           </View>
           { (round.number === 13 && round.selection) ? (
-            <Button title='Play Again' onPress={resetGame} />
+            <View style={styles.button}>
+              <Button color={colors.text} title='Play Again' onPress={resetGame} />
+            </View>
           ) : (roll < 3 && round.selection === null ? (
-            <Button title='Roll!' onPress={rollDice} />
+            <View style={styles.button}>
+              <Button color={colors.text} title='Roll!' onPress={rollDice} />
+            </View>
             ) : (round.selection === null ? (
               <Text style={[styles.gameText, {marginTop: 14}]}>Make a Selection</Text>
             ) : (
-              <Button title='Next Round' onPress={resetRoll} />
+              <View style={styles.button}>
+                <Button color={colors.text} title='Next Round' onPress={resetRoll} />
+              </View>
             )
           ))}
         </View>
@@ -486,14 +492,17 @@ const styles = StyleSheet.create({
 
   diceSection: {
     alignItems: 'center',
-    justifyContent: 'center'
+    justifyContent: 'center',
+    backgroundColor: colors.diceBg,
+    borderTopRightRadius: 12,
+    borderBottomRightRadius: 12
   },
 
   header: {
     fontSize: 40,
     fontWeight: 'bold',
     marginVertical: 10,
-    color: colors.headers
+    color: colors.text
   },
 
   gameboard: {
@@ -511,5 +520,10 @@ const styles = StyleSheet.create({
   gameText: {
     fontSize: 20,
     color: colors.text
+  },
+
+  button: {
+    backgroundColor: colors.button,
+    borderRadius: 12
   }
 });

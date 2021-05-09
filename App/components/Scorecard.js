@@ -14,8 +14,8 @@ const Scorecard = ({ upperScores, lowerScores, setRound, upperTotal, lowerTotal,
 
     return (
         <View>
-            <Text style={styles.title}>Score</Text>
             <View style={styles.container}>
+            <Text style={styles.title}>Score</Text>
                 <View style={styles.section}>
                     {upperScores.map((scoreObj, idx) => (
                         <TouchableOpacity
@@ -77,7 +77,10 @@ const Scorecard = ({ upperScores, lowerScores, setRound, upperTotal, lowerTotal,
 
 const styles = StyleSheet.create({
     container: {
-        justifyContent: 'center'
+        justifyContent: 'center',
+        backgroundColor: colors.scoreBg,
+        borderTopLeftRadius: 12,
+        borderBottomLeftRadius: 12
     },
 
     locked: {
@@ -87,7 +90,8 @@ const styles = StyleSheet.create({
         paddingHorizontal: 5,
         paddingVertical: 5,
         justifyContent: 'space-between',
-        flexDirection: 'row'
+        flexDirection: 'row',
+        borderRadius: 12
     },
 
     textContainer: {
@@ -103,14 +107,14 @@ const styles = StyleSheet.create({
         fontSize: 25,
         fontWeight: 'bold',
         textAlign: 'center',
-        color: colors.headers
+        color: colors.text
     },
 
     section: {
         marginHorizontal: 5,
         marginVertical: 3,
         flexWrap: 'wrap',
-        height: 140
+        height: 140,
     },
     
     score: {
