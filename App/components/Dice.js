@@ -20,13 +20,13 @@ const Dice = ({ icon, isLocked, setDie }) => {
 const styles = StyleSheet.create({
     locked: {
         color: 'darkblue',
-        fontSize: 60,
+        fontSize: 80,
         marginHorizontal: 10,
     },
 
     unLocked: {
         color: 'lightblue',
-        fontSize: 60,
+        fontSize: 80,
         marginHorizontal: 10
     }
 })

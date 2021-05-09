@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, Text, View, Button } from 'react-native';
+import { StyleSheet, Text, View, Button, SafeAreaView } from 'react-native';
 import Dice from './App/components/Dice';
 import Scorecard from './App/components/Scorecard';
 
@@ -420,7 +420,7 @@ export default function App() {
   };
 
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
       <Text style={styles.header} onPress={resetGame}>Yatzy!</Text>
       <View style={styles.gameboard}>
         <Scorecard
@@ -459,14 +459,14 @@ export default function App() {
           ) : (roll < 3 && round.selection === null ? (
             <Button title='Roll!' onPress={rollDice} />
             ) : (round.selection === null ? (
-              <Text>Make a Selection</Text>
+              <Text style={{fontSize: 18, marginTop: 16}}>Make a Selection</Text>
             ) : (
               <Button title='Next Round' onPress={resetRoll} />
             )
           ))}
         </View>
       </View>
-    </View>
+    </SafeAreaView>
   );
 }
 
@@ -496,8 +496,6 @@ const styles = StyleSheet.create({
 
   gameboard: {
     flex: 1,
-    width: '100%',
-    paddingHorizontal: 60,
     flexDirection: 'row',
     justifyContent: 'space-between'
   },
