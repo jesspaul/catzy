@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, Text, View, Button, SafeAreaView } from 'react-native';
+import { Text, View, Button, SafeAreaView, Dimensions } from 'react-native';
+import EStyleSheet from 'react-native-extended-stylesheet';
 import Dice from './App/components/Dice';
 import Scorecard from './App/components/Scorecard';
 import colors from './App/constants/colors';
@@ -485,9 +486,17 @@ export default function App() {
   );
 }
 
-const styles = StyleSheet.create({
+const { width, height } = Dimensions.get('window');
+EStyleSheet.build({
+  $rem: width > 340 ? 18 : 16,
+  $screenWidth: width,
+  $screenHeight: height
+});
+
+const styles = EStyleSheet.create({
   container: {
-    flex: 1,
+    width: '100%',
+    height: '100%',
     backgroundColor: colors.background,
     alignItems: 'center',
     justifyContent: 'center',
@@ -495,43 +504,42 @@ const styles = StyleSheet.create({
 
   diceContainer: {
     flexDirection: 'row',
-    marginVertical: 20
+    marginVertical: '1.5rem'
   },
 
   diceSection: {
     alignItems: 'center',
     justifyContent: 'center',
     backgroundColor: colors.diceBg,
-    borderTopRightRadius: 12,
-    borderBottomRightRadius: 12
+    borderTopRightRadius: '.8rem',
+    borderBottomRightRadius: '.8rem'
   },
 
   header: {
-    fontSize: 40,
+    fontSize: '2rem',
     fontWeight: 'bold',
-    marginVertical: 10,
+    marginVertical: '.6rem',
     color: colors.text
   },
 
   gameboard: {
-    flex: 1,
     flexDirection: 'row',
     justifyContent: 'space-between'
   },
 
   gameInfo: {
-    width: 300,
+    width: '.35 * $screenWidth',
     flexDirection: 'row',
     justifyContent: 'space-between',
   },
 
   gameText: {
-    fontSize: 20,
+    fontSize: '1.5rem',
     color: colors.text
   },
 
   button: {
     backgroundColor: colors.button,
-    borderRadius: 12
+    borderRadius: '.8rem'
   }
 });

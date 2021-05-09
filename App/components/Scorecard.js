@@ -1,5 +1,6 @@
 import React from 'react';
-import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import { View, Text, TouchableOpacity } from 'react-native';
+import EStyleSheet from 'react-native-extended-stylesheet';
 import colors from '../constants/colors';
 
 const Scorecard = ({ upperScores, lowerScores, setRound, upperTotal, lowerTotal, upperBonus, round }) => {
@@ -75,50 +76,49 @@ const Scorecard = ({ upperScores, lowerScores, setRound, upperTotal, lowerTotal,
     );
 }
 
-const styles = StyleSheet.create({
+const styles = EStyleSheet.create({
     container: {
         justifyContent: 'center',
         backgroundColor: colors.scoreBg,
-        borderTopLeftRadius: 12,
-        borderBottomLeftRadius: 12
+        borderTopLeftRadius: '.8rem',
+        borderBottomLeftRadius: '.8rem'
     },
 
     locked: {
         backgroundColor: colors.highlight,
-        width: 160,
-        fontSize: 18,
-        paddingHorizontal: 5,
-        paddingVertical: 5,
+        width: '9rem',
+        fontSize: '1rem',
+        paddingHorizontal: '.3rem',
+        paddingVertical: '.3rem',
         justifyContent: 'space-between',
         flexDirection: 'row',
-        borderRadius: 12
+        borderRadius: '.8rem'
     },
 
     textContainer: {
-        fontSize: 18,
-        paddingHorizontal: 5,
-        paddingVertical: 5,
-        width: 160,
+        fontSize: '1rem',
+        paddingHorizontal: '.3rem',
+        paddingVertical: '.3rem',
+        width: '9rem',
         justifyContent: 'space-between',
         flexDirection: 'row'
     },
 
     title: {
-        fontSize: 25,
+        fontSize: '1.4rem',
         fontWeight: 'bold',
         textAlign: 'center',
         color: colors.text
     },
 
     section: {
-        marginHorizontal: 5,
-        marginVertical: 3,
+        marginHorizontal: '.3rem',
         flexWrap: 'wrap',
-        height: 140,
+        height: '7.8rem',
     },
     
     score: {
-        fontSize: 18,
+        fontSize: '1rem',
         color: colors.text
     }
 });
