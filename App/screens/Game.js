@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Text, View, Button, Dimensions, TouchableOpacity, Pressable } from 'react-native';
+import { Text, View, Dimensions, TouchableOpacity, Pressable } from 'react-native';
 import EStyleSheet from 'react-native-extended-stylesheet';
 import { FontAwesome5 } from '@expo/vector-icons';
 import { SafeAreaView } from 'react-native-safe-area-context';

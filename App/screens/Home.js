@@ -13,7 +13,7 @@ export default ({ navigation }) => {
                     <FontAwesome5 name='bars' size={32} color={colors.text} />
                 </TouchableOpacity>
             </SafeAreaView>
-            <Text>THis is the Home Screen</Text>
+            <Text style={styles.title}>Yatzy!</Text>
             <Pressable style={styles.button} onPress={() => navigation.push('Game')}>
                 <Text style={styles.buttonText}>New Game</Text>
             </Pressable>
@@ -25,7 +25,8 @@ const styles = EStyleSheet.create({
     container: {
         flex: 1,
         justifyContent: 'center',
-        alignItems: 'center'
+        alignItems: 'center',
+        backgroundColor: colors.background
     },
     
     header: {
@@ -46,4 +47,11 @@ const styles = EStyleSheet.create({
         fontSize: '1.5rem',
         paddingHorizontal: '.6rem'
     },
+
+    title: {
+        fontSize: '3rem',
+        fontWeight: 'bold',
+        marginBottom: '1rem',
+        color: colors.text
+    }
 })
