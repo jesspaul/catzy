@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { StyleSheet, Text, View, Button, SafeAreaView } from 'react-native';
 import Dice from './App/components/Dice';
 import Scorecard from './App/components/Scorecard';
+import colors from './App/constants/colors';
 
 export default function App() {
   const dieOriginalValue = 0;
@@ -437,14 +438,14 @@ export default function App() {
           {
             round.number === 13 && round.selection ? (
               <>
-              <Text style={{fontSize: 20}}>Game Over</Text>
-              <Text style={{fontSize: 20}}>Score: {upperTotal + lowerTotal + upperBonus}</Text>
+              <Text style={styles.gameText}>Game Over</Text>
+              <Text style={styles.gameText}>Score: {upperTotal + lowerTotal + upperBonus}</Text>
               </>
             ) : (
               <>
               <View style={styles.gameInfo}>
-                <Text style={{fontSize: 20}}>Round: {round.number}</Text>
-                <Text style={{fontSize: 20}}>Roll: {roll}</Text>
+                <Text style={styles.gameText}>Round: {round.number}</Text>
+                <Text style={styles.gameText}>Roll: {roll}</Text>
               </View>
               </>
             )
@@ -459,7 +460,7 @@ export default function App() {
           ) : (roll < 3 && round.selection === null ? (
             <Button title='Roll!' onPress={rollDice} />
             ) : (round.selection === null ? (
-              <Text style={{fontSize: 18, marginTop: 16}}>Make a Selection</Text>
+              <Text style={[styles.gameText, {marginTop: 14}]}>Make a Selection</Text>
             ) : (
               <Button title='Next Round' onPress={resetRoll} />
             )
@@ -473,7 +474,7 @@ export default function App() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: 'white',
+    backgroundColor: colors.background,
     alignItems: 'center',
     justifyContent: 'center',
   },
@@ -491,7 +492,8 @@ const styles = StyleSheet.create({
   header: {
     fontSize: 40,
     fontWeight: 'bold',
-    marginVertical: 10
+    marginVertical: 10,
+    color: colors.headers
   },
 
   gameboard: {
@@ -503,6 +505,11 @@ const styles = StyleSheet.create({
   gameInfo: {
     width: 300,
     flexDirection: 'row',
-    justifyContent: 'space-between'
+    justifyContent: 'space-between',
+  },
+
+  gameText: {
+    fontSize: 20,
+    color: colors.text
   }
 });

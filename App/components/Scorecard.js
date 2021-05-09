@@ -1,5 +1,6 @@
 import React from 'react';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import colors from '../constants/colors';
 
 const Scorecard = ({ upperScores, lowerScores, setRound, upperTotal, lowerTotal, upperBonus, round }) => {
     const toggleSelection = (scoreObj) => {
@@ -80,7 +81,7 @@ const styles = StyleSheet.create({
     },
 
     locked: {
-        backgroundColor: 'lightgray',
+        backgroundColor: colors.highlight,
         width: 160,
         fontSize: 18,
         paddingHorizontal: 5,
@@ -102,6 +103,7 @@ const styles = StyleSheet.create({
         fontSize: 25,
         fontWeight: 'bold',
         textAlign: 'center',
+        color: colors.headers
     },
 
     section: {
@@ -112,7 +114,8 @@ const styles = StyleSheet.create({
     },
     
     score: {
-        fontSize: 18
+        fontSize: 18,
+        color: colors.text
     }
 });
  

@@ -1,6 +1,7 @@
 import React from 'react';
 import { TouchableOpacity, StyleSheet } from 'react-native';
 import { FontAwesome5 } from '@expo/vector-icons';
+import colors from '../constants/colors';
 
 const Dice = ({ icon, isLocked, setDie }) => {
     const lockDie = () => {
@@ -19,13 +20,13 @@ const Dice = ({ icon, isLocked, setDie }) => {
 
 const styles = StyleSheet.create({
     locked: {
-        color: 'darkblue',
+        color: colors.lockedDice,
         fontSize: 80,
         marginHorizontal: 10,
     },
 
     unLocked: {
-        color: 'lightblue',
+        color: colors.dice,
         fontSize: 80,
         marginHorizontal: 10
     }
