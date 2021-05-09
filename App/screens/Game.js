@@ -435,10 +435,9 @@ export default ({ navigation }) => {
     <SafeAreaView style={styles.container}>
         <SafeAreaView style={styles.header}>
             <TouchableOpacity onPress={() => navigation.push('Instructions')}>
-                <FontAwesome5 name='bars' size={32} color={colors.text} />
+                <FontAwesome5 name='paw' size={32} color={colors.text} />
             </TouchableOpacity>
         </SafeAreaView>
-      <Text style={styles.title} onPress={resetGame}>Yatzy!</Text>
       <View style={styles.gameboard}>
         <Scorecard
           upperScores={upperScores}
@@ -521,13 +520,6 @@ const styles = EStyleSheet.create({
     backgroundColor: colors.diceBg,
     borderTopRightRadius: '.8rem',
     borderBottomRightRadius: '.8rem'
-  },
-
-  title: {
-    fontSize: '2rem',
-    fontWeight: 'bold',
-    marginVertical: '.6rem',
-    color: colors.text
   },
 
   gameboard: {

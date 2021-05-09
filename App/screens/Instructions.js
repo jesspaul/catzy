@@ -118,7 +118,7 @@ const styles = EStyleSheet.create({
     },
 
     content: {
-        width: '70%'
+        width: '90%'
     },
 
     heading: {

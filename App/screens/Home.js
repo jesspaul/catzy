@@ -10,13 +10,26 @@ export default ({ navigation }) => {
         <View style={styles.container}>
             <SafeAreaView style={styles.header}>
                 <TouchableOpacity onPress={() => navigation.push('Instructions')}>
-                    <FontAwesome5 name='bars' size={32} color={colors.text} />
+                    <FontAwesome5 name='paw' size={32} color={colors.text} />
                 </TouchableOpacity>
             </SafeAreaView>
-            <Text style={styles.title}>Yatzy!</Text>
+            <Text style={styles.title}>Catzy</Text>
+            <Text style={styles.subtitle}>It's Yatzy with cats!</Text>
             <Pressable style={styles.button} onPress={() => navigation.push('Game')}>
                 <Text style={styles.buttonText}>New Game</Text>
             </Pressable>
+            <View style={styles.cat}>
+                <View style={styles.catSection}>
+                    <FontAwesome5 name='cat' size={60} style={{paddingHorizontal: 3}} color={colors.button} />
+                    <FontAwesome5 name='cat' size={60} style={{paddingHorizontal: 3}} color={colors.highlight} />
+                    <FontAwesome5 name='cat' size={60} style={{paddingHorizontal: 3}} color={colors.dice} />
+                </View>
+                <View style={styles.catSection}>
+                    <FontAwesome5 name='cat' size={60} style={{paddingHorizontal: 3}} color={colors.dice} />
+                    <FontAwesome5 name='cat' size={60} style={{paddingHorizontal: 3}} color={colors.highlight} />
+                    <FontAwesome5 name='cat' size={60} style={{paddingHorizontal: 3}} color={colors.button} />
+                </View>
+            </View>
         </View>
     )
 }
@@ -51,7 +64,22 @@ const styles = EStyleSheet.create({
     title: {
         fontSize: '3rem',
         fontWeight: 'bold',
-        marginBottom: '1rem',
         color: colors.text
+    },
+    
+    subtitle: {
+        color: colors.text,
+        fontSize: '1.5rem',
+        marginBottom: '1.5rem'
+    },
+
+    cat: {
+        flexDirection: 'row',
+        width: '$screenWidth * .7',
+        justifyContent: 'space-between'
+    },
+
+    catSection: {
+        flexDirection: 'row',
     }
 })
