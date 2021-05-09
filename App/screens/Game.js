@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from 'react';
-import { Text, View, Button, SafeAreaView, Dimensions } from 'react-native';
+import { Text, View, Button, Dimensions, TouchableOpacity, Pressable } from 'react-native';
 import EStyleSheet from 'react-native-extended-stylesheet';
+import { FontAwesome5 } from '@expo/vector-icons';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import Dice from '../components/Dice';
 import Scorecard from '../components/Scorecard';
 import colors from '../constants/colors';
 
-export default () => {
+export default ({ navigation }) => {
   const dieOriginalValue = 0;
   const dieOriginalIcon = 'dice-d6';
   const [die0, setDie0] = useState({
@@ -431,7 +433,12 @@ export default () => {
 
   return (
     <SafeAreaView style={styles.container}>
-      <Text style={styles.header} onPress={resetGame}>Yatzy!</Text>
+        <SafeAreaView style={styles.header}>
+            <TouchableOpacity onPress={() => navigation.push('Instructions')}>
+                <FontAwesome5 name='bars' size={32} color={colors.text} />
+            </TouchableOpacity>
+        </SafeAreaView>
+      <Text style={styles.title} onPress={resetGame}>Yatzy!</Text>
       <View style={styles.gameboard}>
         <Scorecard
           upperScores={upperScores}
@@ -466,19 +473,19 @@ export default () => {
             ))}
           </View>
           { (round.number === 13 && round.selection) ? (
-            <View style={styles.button}>
-              <Button color={colors.buttonText} title='Play Again' onPress={resetGame} />
-            </View>
+            <Pressable style={styles.button}>
+              <Text style={styles.buttonText} onPress={resetGame}>Play Again</Text>
+            </Pressable>
           ) : (roll < 3 && round.selection === null ? (
-            <View style={styles.button}>
-              <Button color={colors.buttonText} title='Roll!' onPress={rollDice} />
-            </View>
+            <Pressable style={styles.button}>
+              <Text style={styles.buttonText} onPress={rollDice}>Roll!</Text>
+            </Pressable>
             ) : (round.selection === null ? (
-              <Text style={[styles.gameText, {marginTop: 14}]}>Select a Score</Text>
+              <Text style={styles.gameText}>Select a Score</Text>
             ) : (
-              <View style={styles.button}>
-                <Button color={colors.buttonText} title='Next Round' onPress={resetRoll} />
-              </View>
+              <Pressable style={styles.button}>
+                <Text style={styles.buttonText} onPress={resetRoll}>Next Round!</Text>
+              </Pressable>
             )
           ))}
         </View>
@@ -516,7 +523,7 @@ const styles = EStyleSheet.create({
     borderBottomRightRadius: '.8rem'
   },
 
-  header: {
+  title: {
     fontSize: '2rem',
     fontWeight: 'bold',
     marginVertical: '.6rem',
@@ -542,5 +549,19 @@ const styles = EStyleSheet.create({
   button: {
     backgroundColor: colors.button,
     borderRadius: '.8rem',
+  },
+
+  buttonText: {
+    color: colors.buttonText,
+    fontSize: '1.5rem',
+    paddingHorizontal: '.6rem'
+  },
+    
+  header: {
+      position: 'absolute',
+      alignItems: 'flex-end',
+      top: 0,
+      right: 0,
+      paddingTop: '1rem'
   }
 });
