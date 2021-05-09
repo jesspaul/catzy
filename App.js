@@ -441,6 +441,7 @@ export default function App() {
           lowerTotal={lowerTotal}
           upperBonus={upperBonus}
           round={round}
+          roll={roll}
         />
 
         <View style={styles.diceSection}>

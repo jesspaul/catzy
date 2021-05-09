@@ -3,9 +3,9 @@ import { View, Text, TouchableOpacity } from 'react-native';
 import EStyleSheet from 'react-native-extended-stylesheet';
 import colors from '../constants/colors';
 
-const Scorecard = ({ upperScores, lowerScores, setRound, upperTotal, lowerTotal, upperBonus, round }) => {
+const Scorecard = ({ upperScores, lowerScores, setRound, upperTotal, lowerTotal, upperBonus, round, roll }) => {
     const toggleSelection = (scoreObj) => {
-        if (!scoreObj.score.isLocked) {
+        if (!scoreObj.score.isLocked && roll !== 0) {
             setRound(prevState => ({
                 ...prevState,
                 selection: prevState.selection === null ? scoreObj : null
