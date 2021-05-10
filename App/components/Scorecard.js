@@ -86,9 +86,9 @@ const styles = EStyleSheet.create({
 
     locked: {
         backgroundColor: colors.highlight,
-        width: '6.5rem',
+        width: '9rem',
         paddingHorizontal: '.3rem',
-        paddingVertical: '.3rem',
+        paddingVertical: '.1rem',
         justifyContent: 'space-between',
         flexDirection: 'row',
         borderRadius: '.8rem'
@@ -96,16 +96,17 @@ const styles = EStyleSheet.create({
 
     textContainer: {
         paddingHorizontal: '.3rem',
-        paddingVertical: '.3rem',
-        width: '6.5rem',
+        paddingVertical: '.1rem',
+        width: '9rem',
         justifyContent: 'space-between',
         flexDirection: 'row'
     },
 
     title: {
-        fontSize: '1rem',
+        fontSize: '1.2rem',
         fontWeight: 'bold',
         textAlign: 'center',
+        marginBottom: '.3rem',
         color: colors.text
     },
 
@@ -113,10 +114,11 @@ const styles = EStyleSheet.create({
         marginHorizontal: '.3rem',
         flexWrap: 'wrap',
         height: '6rem',
+        marginBottom: '.5rem'
     },
     
     score: {
-        fontSize: '.7rem',
+        fontSize: '1rem',
         color: colors.text
     }
 });
